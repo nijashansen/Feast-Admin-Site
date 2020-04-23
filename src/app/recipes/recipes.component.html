@@ -1,1 +1,18 @@
-<p>recipes works!</p>
+<div>
+  <ul *ngFor=" let recipe of recipes$ | async">
+   <p>
+     {{recipe.name}}
+   </p>
+    <p>
+      ingredients:
+    </p>
+    <ul *ngFor="let ing of recipe.ingredients">
+      <p>
+        {{ing.valueOf()}}
+      </p>
+    </ul>
+
+
+
+  </ul>
+</div>
