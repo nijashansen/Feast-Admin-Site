@@ -1,3 +1,31 @@
 <h1>Front page</h1>
-<button  (click)="goToRecipes()">Go To Recipes</button>
+
+<div *ngIf="auth.authState | async as user; else showLogin">
+  <h1>Hello {{ user.displayName }}!</h1>
+  <button (click)="logout()">Logout</button>
+</div>
+<ng-template #showLogin>
+  <p>Please login.</p>
+  <button (click)="loginWithGoogle()">Login with Google</button>
+</ng-template>
+
+<div *ngIf="loginWithEmail == true">
+<br>
+  <input type="text" placeholder="Email">
+<br>
+  <input type="password" placeholder="Password">
+<br>
+<!--
+<button (click)="loginWithEmailPassword()">Login</button>
+--->
+</div>
+
+<div *ngIf="auth.authState | async">
+
+  <button  (click)="goToRecipes()">Go To Recipes</button>
+
+</div>
+
+
+
 
