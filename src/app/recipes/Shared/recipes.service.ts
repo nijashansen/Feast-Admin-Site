@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {AngularFirestore} from "@angular/fire/firestore";
-import {Observable} from "rxjs";
-import {Recipe} from "./recipe";
-import {map} from "rxjs/operators";
+import {AngularFirestore} from '@angular/fire/firestore';
+import {from, Observable} from 'rxjs';
+import {Recipe} from './recipe';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +24,18 @@ export class RecipesService {
       });
       return newArry;
     }));
+  }
+
+
+  addProduct(recipe: Recipe): Observable<Recipe> {
+    return from(
+      this.fs
+        .collection('Recipes')
+        .add(recipe)
+    ).pipe(
+      map(() => {
+        return recipe;
+      })
+    );
   }
 }

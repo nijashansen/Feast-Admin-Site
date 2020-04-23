@@ -1,0 +1,39 @@
+<div class="mat-card">
+  <div class="mat-card-content">
+  <h1 class="mat-card-title">Add Recipe</h1>
+    <form [formGroup]="form" (ngSubmit)="submitHandler()">
+      <hr>
+
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="name">
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput placeholder="Estimated Time" formControlName="estimatedTime">
+      </mat-form-field>
+
+      <div formArrayName="ingredients">
+
+        <div *ngFor="let ing of ingredients.controls; let i=index" [formGroupName]="i">
+
+          <mat-form-field>
+            <input type="text" matInput placeholder="Name" formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field class="spacerIng">
+            <input type="number" matInput placeholder="Amount In Grams" formControlName="amount">
+          </mat-form-field>
+
+          <button mat-raised-button color="warn" (click)="deleteIngredient(i)">Delete</button>
+
+        </div>
+
+        <button mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
+        <button mat-raised-button color="accent">Add Recipe</button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

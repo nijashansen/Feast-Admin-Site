@@ -1,3 +1,5 @@
+<div class="spacer">
+<app-add-recipe></app-add-recipe>
 <div>
   <ul *ngFor=" let recipe of recipes$ | async">
    <p>
@@ -8,11 +10,12 @@
     </p>
     <ul *ngFor="let ing of recipe.ingredients">
       <p>
-        {{ing.valueOf()}}
+        {{ing.name}}  {{ing.amount}}
       </p>
     </ul>
 
 
 
   </ul>
+</div>
 </div>
