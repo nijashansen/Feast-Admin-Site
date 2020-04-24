@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {AuthenticationService} from "../services/authentication.service";
 import {Observable} from "rxjs";
 import {User} from "firebase";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-home',
@@ -12,11 +12,18 @@ import {FormControl, FormGroup} from "@angular/forms";
 })
 export class HomeComponent implements OnInit {
 
-  loginWithEmail: boolean = false;
+  public loginWithEmail: boolean = false;
 
-  constructor(private router: Router, public auth: AuthenticationService) { }
+  loginForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private router: Router, public auth: AuthenticationService) { }
 
   ngOnInit(): void {
+
+    this.loginForm = this.fb.group({
+      email: '',
+      password: ''
+    });
   }
 
   goToRecipes() {
@@ -32,8 +39,36 @@ export class HomeComponent implements OnInit {
     this.auth.signOut();
   }
 
-  loginWithEmailPassword(email: string, password: string) {
+  loginWithEmailPassword() {
     this.loginWithEmail = true;
-    this.auth.signInWithEmailPassword(email, password);
+
+    const email = this.loginForm.value.email
+    const password = this.loginForm.value.password
+
+    try {
+      this.auth.signInWithEmailPassword(email, password);
+      this.loginWithEmail = false;
+    } catch (e) {
+      window.alert('user does not exist');
+    }
+
   }
+
+  signUpWithEmailPassword() {
+
+    const email = this.loginForm.value.email
+    const password = this.loginForm.value.password
+
+    this.auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  loginWithEmailMethod() {
+    if (this.loginWithEmail == true) {
+      this.loginWithEmail = false
+    } else if (this.loginWithEmail == false) {
+      this.loginWithEmail = true
+    };
+  }
+
+
 }

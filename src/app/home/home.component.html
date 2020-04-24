@@ -1,4 +1,4 @@
-<h1>Front page</h1>
+<h2>Front page</h2>
 
 <div *ngIf="auth.authState | async as user; else showLogin">
   <h1>Hello {{ user.displayName }}!</h1>
@@ -7,17 +7,29 @@
 <ng-template #showLogin>
   <p>Please login.</p>
   <button (click)="loginWithGoogle()">Login with Google</button>
+  <button (click)="loginWithEmailMethod()">Login with Email and Password</button>
 </ng-template>
 
 <div *ngIf="loginWithEmail == true">
-<br>
-  <input type="text" placeholder="Email">
-<br>
-  <input type="password" placeholder="Password">
-<br>
-<!--
-<button (click)="loginWithEmailPassword()">Login</button>
---->
+  <form [formGroup]="loginForm">
+
+    <mat-form-field>
+      <input matInput type="text" formControlName="email" placeholder="Email">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <input matInput type="password" formControlName="password" placeholder="Password">
+    </mat-form-field>
+
+    <br>
+
+    <button mat-stroked-button (click)="loginWithEmailPassword()" routerLink="/home">Login</button>
+    <button mat-stroked-button (click)="signUpWithEmailPassword()" routerLink="/home">sign up</button>
+
+  </form>
+
 </div>
 
 <div *ngIf="auth.authState | async">

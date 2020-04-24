@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/auth";
 import * as firebase from "firebase";
-import {Observable} from "rxjs";
-import {User} from "firebase";
 
 
 @Injectable({
@@ -24,6 +22,11 @@ export class AuthenticationService {
   }
 
   signInWithEmailPassword(email: string, password: string) {
+    this.authState = this.afAuth.authState;
     this.afAuth.signInWithEmailAndPassword(email, password);
+  }
+
+  createUserWithEmailAndPassword(email: string, password: string) {
+    this.afAuth.createUserWithEmailAndPassword(email, password);
   }
 }
