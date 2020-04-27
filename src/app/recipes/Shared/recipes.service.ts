@@ -11,15 +11,17 @@ export class RecipesService {
 
   constructor(private fs: AngularFirestore) { }
 
-  getAllRecipes(): Observable<Recipe[]> {
+getAllRecipes(): Observable<Recipe[]> {
     return this.fs.collection<Recipe>('Recipes').snapshotChanges().pipe(map(stuf => {
       const newArry: Recipe[] = [];
       stuf.forEach(doc => {
         const recipe = doc.payload.doc.data();
+        const Fbid = doc.payload.doc.id;
         newArry.push({
+          id: Fbid,
           name: recipe.name,
           estimatedTime: recipe.estimatedTime,
-          ingredients: recipe.ingredients
+          ingredients: recipe.ingredients,
         });
       });
       return newArry;
@@ -38,4 +40,31 @@ export class RecipesService {
       })
     );
   }
+
+
+  deleteRecipe(recipe: Recipe): Observable<Recipe> {
+    return from(
+      this.fs
+        .doc(`Recipes/${recipe.id}`)
+        .delete()
+    ).pipe(
+      map(() => {
+        return recipe;
+      })
+    );
+  }
+
+
+  updateProduct(recipe: Recipe): Observable<Recipe> {
+    return from( this.fs.doc(`products/${recipe.id}`).update(recipe)).
+    pipe( map(() => {
+      return recipe; }
+    ));
+
+  }
+
+
 }
+
+
+

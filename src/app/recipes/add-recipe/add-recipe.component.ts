@@ -53,14 +53,6 @@ export class AddRecipeComponent implements OnInit {
     this.ingredients.removeAt(i);
   }
 
-  async onSubmit() {
-    if (this.recipe.name !== '' && this.recipe.estimatedTime < 0 && this.recipe.ingredients !== null){
-    this.recipesService.addProduct(this.recipe);
-    this.recipe.ingredients = [];
-    this.recipe.estimatedTime = 0;
-    this.recipe.name = '';
-    }
-  }
 
   async submitHandler() {
     this.loading = true;
@@ -70,6 +62,7 @@ export class AddRecipeComponent implements OnInit {
     try {
       this.recipesService.addProduct(this.recipe)
       this.success = true;
+
     } catch (err) {
       console.error(err);
     }
