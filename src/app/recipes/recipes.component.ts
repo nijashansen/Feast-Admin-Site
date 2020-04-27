@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs";
-import {Recipe} from "./Shared/recipe";
-import {RecipesService} from "./Shared/recipes.service";
+import {Recipe} from "./shared/recipe";
+import {RecipesService} from "./shared/recipes.service";
 import {Router} from "@angular/router";
 
 @Component({
