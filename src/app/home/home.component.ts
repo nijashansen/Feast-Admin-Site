@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../services/authentication.service";
-import {Observable} from "rxjs";
-import {User} from "firebase";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-home',
@@ -16,10 +15,11 @@ export class HomeComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, public auth: AuthenticationService) { }
+  constructor(private fb: FormBuilder,
+              private router: Router,
+              public auth: AuthenticationService,) { }
 
   ngOnInit(): void {
-
     this.loginForm = this.fb.group({
       email: '',
       password: ''
@@ -44,8 +44,6 @@ export class HomeComponent implements OnInit {
   }
 
   loginWithEmailPassword() {
-    this.loginWithEmail = true;
-
     const email = this.loginForm.value.email
     const password = this.loginForm.value.password
 
@@ -53,13 +51,11 @@ export class HomeComponent implements OnInit {
       this.auth.signInWithEmailPassword(email, password);
       this.loginWithEmail = false;
     } catch (e) {
-      window.alert('user does not exist');
+      console.log(e)
     }
-
   }
 
   signUpWithEmailPassword() {
-
     const email = this.loginForm.value.email
     const password = this.loginForm.value.password
 
@@ -71,8 +67,6 @@ export class HomeComponent implements OnInit {
       this.loginWithEmail = false
     } else if (this.loginWithEmail == false) {
       this.loginWithEmail = true
-    };
+    }
   }
-
-
 }

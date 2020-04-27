@@ -1,14 +1,14 @@
-<h2>Front page</h2>
+<h1>Front page</h1>
 
 <div *ngIf="auth.authState | async as user; else showLogin">
-  <h1>Hello {{ user.displayName }}!</h1>
+  <h3>Hello {{ user.name }}!</h3>
   <p>Your User Id = {{user.uid}}</p>
-  <button (click)="logout()">Logout</button>
+  <button mat-stroked-button color="warn" (click)="logout()">Logout</button>
 </div>
 <ng-template #showLogin>
   <p>Please login.</p>
-  <button (click)="loginWithGoogle()">Login with Google</button>
-  <button (click)="loginWithEmailMethod()">Login with Email and Password</button>
+  <button mat-stroked-button (click)="loginWithGoogle()">Login with Google</button>
+  <button mat-stroked-button (click)="loginWithEmailMethod()">Login with Email and Password</button>
 </ng-template>
 
 <div *ngIf="loginWithEmail == true">
@@ -35,8 +35,8 @@
 
 <div *ngIf="auth.authState | async">
 
-  <button  (click)="goToRecipes()">Go To Recipes</button>
-  <button  (click)="goToUsers()">Go To Users</button>
+  <button mat-stroked-button (click)="goToRecipes()">Go To Recipes</button>
+  <button mat-stroked-button (click)="goToUsers()">Go To Users</button>
 
 </div>
 
