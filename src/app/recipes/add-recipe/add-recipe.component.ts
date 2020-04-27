@@ -55,13 +55,12 @@ export class AddRecipeComponent implements OnInit {
 
 
   async submitHandler() {
-    this.loading = true;
+
 
     this.recipe = this.form.value;
 
     try {
-      this.recipesService.addProduct(this.recipe)
-      this.success = true;
+      this.recipesService.addProduct(this.recipe);
 
     } catch (err) {
       console.error(err);

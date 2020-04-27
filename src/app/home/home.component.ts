@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
   }
 
   loginWithGoogle() {
-    this.auth.singInWithGoogle()
+    this.auth.singInWithGoogle();
   }
 
   logout() {

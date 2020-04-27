@@ -7,9 +7,10 @@ import {firebaseConfig} from '../environments/firebaseConfig';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
-import {HomeModule} from "./home/home.module";
+import {HomeModule} from './home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import {UserGuard} from "./guard/guard.guard";
 
 
 
@@ -30,7 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [UserGuard],
   bootstrap: [AppComponent]
+
 })
 export class AppModule { }

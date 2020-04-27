@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/auth";
 import * as firebase from "firebase";
 import {AngularFirestore} from "@angular/fire/firestore";
+import {from, Observable} from "rxjs";
+import {AuthUser} from "../users/shared/user";
+import {map} from "rxjs/operators";
+import {User} from "firebase";
 
 
 @Injectable({
@@ -15,20 +19,41 @@ export class AuthenticationService {
 
   singInWithGoogle() {
     this.authState = this.afAuth.authState;
-    this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(cred => {
-      return this.fs.collection('Users').doc(cred.user.uid).set({
+    return this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(cred => {
+      this.fs.collection('Users').doc(cred.user.uid).set({
         name: cred.user.email
       });
-    })
+    });
   }
 
   signOut() {
-    this.afAuth.signOut();
+    return from(this.afAuth.signOut());
+  }
+
+
+
+
+
+  getUser(): Observable<AuthUser>{
+    const authUser$ = this.afAuth.authState
+      .pipe(map(
+        cred => this.firebaseUserToAuthUser(cred)
+        ));
+    return authUser$ as Observable<AuthUser>;
+  }
+
+  private firebaseUserToAuthUser(user: User): AuthUser {
+    if (user) {
+      return {
+       name : user.displayName,
+        uid: user.uid,
+      };
+    }
   }
 
   signInWithEmailPassword(email: string, password: string) {
     this.authState = this.afAuth.authState;
-    this.afAuth.signInWithEmailAndPassword(email, password);
+    return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
   createUserWithEmailAndPassword(email: string, password: string) {
