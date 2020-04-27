@@ -1,3 +1,4 @@
+<div class="font">
 <h1>Front page</h1>
 
 <div *ngIf="auth.authState | async as user; else showLogin">
@@ -37,6 +38,8 @@
 
   <button mat-stroked-button (click)="goToRecipes()">Go To Recipes</button>
   <button mat-stroked-button (click)="goToUsers()">Go To Users</button>
+
+</div>
 
 </div>
 
