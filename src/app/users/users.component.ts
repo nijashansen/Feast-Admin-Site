@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "./shared/user.service";
 import {Observable} from "rxjs";
-import {User} from "./shared/user";
+import {AuthUser} from "./shared/user";
 
 
 @Component({
@@ -11,7 +11,7 @@ import {User} from "./shared/user";
 })
 export class UsersComponent implements OnInit {
 
-  users$: Observable<User[]>
+  users$: Observable<AuthUser[]>
 
   constructor(private userService: UserService) { }
 

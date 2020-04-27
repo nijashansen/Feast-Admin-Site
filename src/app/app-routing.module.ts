@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {UserGuard} from "./guard/guard.guard";
 
 
 const routes: Routes = [{
   path: 'recipes',
-  loadChildren: () => import('./recipes/recipes.module').then(m => m.RecipesModule)
+  loadChildren: () => import('./recipes/recipes.module').then(m => m.RecipesModule),
+  canActivateChild: [UserGuard]
 },
   { path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
   { path: 'users',
-    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
+    canActivateChild: [UserGuard]
   },
   {
     path: '**',
