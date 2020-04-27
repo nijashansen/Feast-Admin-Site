@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from "./shared/user.service";
 import {Observable} from "rxjs";
 import {AuthUser} from "./shared/user";
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+
 
 
 @Component({
@@ -15,7 +15,7 @@ export class UsersComponent implements OnInit {
   users$: Observable<AuthUser[]>
 
   editState: boolean = false;
-  userToEdit: User;
+  userToEdit: AuthUser;
 
   constructor(private us: UserService) { }
 
@@ -33,12 +33,12 @@ export class UsersComponent implements OnInit {
     this.userToEdit = null;
   }
 
-  updateUser(user: User) {
+  updateUser(user: AuthUser) {
     this.us.updateUser(user);
     this.clearState();
   }
 
-  deleteItem($event: MouseEvent, user: User) {
+  deleteItem($event: MouseEvent, user: AuthUser) {
     this.clearState();
     this.us.deleteUser(user);
   }

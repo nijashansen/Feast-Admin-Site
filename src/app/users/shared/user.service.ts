@@ -29,7 +29,7 @@ export class UserService {
     }));
   }
 
-  addUser(user: User): Observable<User> {
+  addUser(user: AuthUser): Observable<AuthUser> {
     return from(
       this.fs
         .collection('Users')
@@ -42,7 +42,7 @@ export class UserService {
   }
 
 
-  deleteUser(user: User): Observable<User> {
+  deleteUser(user: AuthUser): Observable<AuthUser> {
     return from(
       this.fs
         .doc(`Users/${user.uid}`)
@@ -55,7 +55,7 @@ export class UserService {
   }
 
 
-  updateUser(user: User): Observable<User> {
+  updateUser(user: AuthUser): Observable<AuthUser> {
     return from( this.fs.doc(`Users/${user.uid}`).update(user)).
     pipe( map(() => {
       return user; }
