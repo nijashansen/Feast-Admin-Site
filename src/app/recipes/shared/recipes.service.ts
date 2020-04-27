@@ -13,18 +13,18 @@ export class RecipesService {
 
 getAllRecipes(): Observable<Recipe[]> {
     return this.fs.collection<Recipe>('Recipes').snapshotChanges().pipe(map(stuf => {
-      const newArry: Recipe[] = [];
+      const newArray: Recipe[] = [];
       stuf.forEach(doc => {
         const recipe = doc.payload.doc.data();
         const Fbid = doc.payload.doc.id;
-        newArry.push({
+        newArray.push({
           id: Fbid,
           name: recipe.name,
           estimatedTime: recipe.estimatedTime,
           ingredients: recipe.ingredients,
         });
       });
-      return newArry;
+      return newArray;
     }));
   }
 
@@ -56,7 +56,7 @@ getAllRecipes(): Observable<Recipe[]> {
 
 
   updateProduct(recipe: Recipe): Observable<Recipe> {
-    return from( this.fs.doc(`products/${recipe.id}`).update(recipe)).
+    return from( this.fs.doc(`Recipes/${recipe.id}`).update(recipe)).
     pipe( map(() => {
       return recipe; }
     ));
