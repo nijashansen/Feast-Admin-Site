@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Recipe} from '../shared/recipe';
-import {RecipesService} from '../shared/recipes.service';
+import {Recipe} from '../Shared/recipe';
+import {RecipesService} from '../Shared/recipes.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
