@@ -4,4 +4,12 @@
   bottom:   2%;
 }
 
+.nextUsersBtn {
+  position: fixed;
+  left: 2%;
+  bottom: 0%;
+  background-color: #673ab7;
+  color: #ffffff;
+}
+
 

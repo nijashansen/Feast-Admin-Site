@@ -52,4 +52,9 @@ export class UsersComponent implements OnInit {
   goToHome() {
     this.router.navigate(['/home'])
   }
+
+  getNextSetOfUsers() {
+    this.us.getNextSetOfUsers();
+
+  }
 }

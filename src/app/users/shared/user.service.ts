@@ -5,6 +5,7 @@ import {map} from "rxjs/operators";
 import {AuthUser} from "./user";
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +16,7 @@ export class UserService {
   }
 
   getAllUsers(): Observable<AuthUser[]> {
-    return this.fs.collection<AuthUser>('Users').snapshotChanges().pipe(map(data => {
+    return this.fs.collection<AuthUser>('Users', ref => ref.limit(8)).snapshotChanges().pipe(map(data => {
       const newArray: AuthUser[] = [];
       data.forEach(doc => {
         newArray.push({
@@ -46,6 +47,11 @@ export class UserService {
     pipe( map(() => {
       return user; }
     ));
+
+  }
+
+
+  getNextSetOfUsers() {
 
   }
 }

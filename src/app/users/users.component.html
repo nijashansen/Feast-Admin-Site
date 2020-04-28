@@ -24,7 +24,7 @@
       <br>
 
       <button mat-stroked-button color="primary" type="submit">Submit User</button>
-      <button mat-stroked-button color="warn" (click)="deleteItem($event, user)" class="deleteBt">Delete User</button>
+      <button mat-stroked-button color="warn" (click)="deleteItem($event, user)">Delete User</button>
 
     </form>
   </div>
@@ -32,6 +32,8 @@
 </ul>
 
 </div>
+
+<button class="nextUsersBtn" mat-button (click)="getNextSetOfUsers()">Get Next Set Of Users</button>
 
 <div class="button-pos">
 <button (click)="goToUserAdd()" mat-fab color="primary">
