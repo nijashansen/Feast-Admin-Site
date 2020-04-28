@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
 import {from, Observable} from "rxjs";
 import {map} from "rxjs/operators";
-
-import {AngularFireAuth} from "@angular/fire/auth";
 import {AuthUser} from "./user";
 
 
@@ -22,25 +20,13 @@ export class UserService {
       data.forEach(doc => {
         newArray.push({
           uid: doc.payload.doc.id,
-          name: doc.payload.doc.data().name
+          name: doc.payload.doc.data().name,
+          email: doc.payload.doc.data().email
         });
       });
       return newArray;
     }));
   }
-
-  addUser(user: AuthUser): Observable<AuthUser> {
-    return from(
-      this.fs
-        .collection('Users')
-        .add(user)
-    ).pipe(
-      map(() => {
-        return user;
-      })
-    );
-  }
-
 
   deleteUser(user: AuthUser): Observable<AuthUser> {
     return from(

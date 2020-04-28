@@ -81,4 +81,8 @@ recipeToEdit: Recipe;
     this.recipesService.deleteRecipe(recipe);
     this.editState = false;
   }
+
+  goToHome() {
+    this.router.navigate(['/home'])
+  }
 }

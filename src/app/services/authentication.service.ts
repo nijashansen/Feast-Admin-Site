@@ -21,7 +21,8 @@ export class AuthenticationService {
     this.authState = this.afAuth.authState;
     return this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(cred => {
       this.fs.collection('Users').doc(cred.user.uid).set({
-        name: cred.user.email
+        email: cred.user.email,
+        name: cred.user.displayName
       });
     });
   }
@@ -29,10 +30,6 @@ export class AuthenticationService {
   signOut() {
     return from(this.afAuth.signOut());
   }
-
-
-
-
 
   getUser(): Observable<AuthUser>{
     const authUser$ = this.afAuth.authState
@@ -47,6 +44,7 @@ export class AuthenticationService {
       return {
        name : user.displayName,
         uid: user.uid,
+        email: user.email
       };
     }
   }
@@ -56,10 +54,11 @@ export class AuthenticationService {
     return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
-  createUserWithEmailAndPassword(email: string, password: string) {
+  createUserWithEmailAndPassword(email: string, password: string, name?: string) {
     this.afAuth.createUserWithEmailAndPassword(email, password).then(cred => {
       return this.fs.collection('Users').doc(cred.user.uid).set({
-        name: cred.user.email
+        name: name,
+        email: cred.user.email
       });
     });
   }

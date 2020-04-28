@@ -1,0 +1,24 @@
+<form [formGroup]="createForm">
+
+  <mat-form-field>
+    <input matInput type="text" formControlName="name" placeholder="Name">
+  </mat-form-field>
+
+  <br>
+
+  <mat-form-field>
+    <input matInput type="text" formControlName="email" placeholder="Email">
+  </mat-form-field>
+
+  <br>
+
+  <mat-form-field>
+    <input matInput type="password" formControlName="password" placeholder="Password">
+  </mat-form-field>
+
+  <br>
+
+  <button mat-stroked-button (click)="signUpWithEmailPassword()" routerLink="/users">Sign up</button>
+  <button mat-stroked-button routerLink="/users">Cancel</button>
+
+</form>
