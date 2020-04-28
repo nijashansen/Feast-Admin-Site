@@ -11,6 +11,10 @@ import {HomeModule} from './home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import {UserGuard} from "./guard/guard.guard";
+import {environment} from "../environments/environment";
+import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
+import {NgxsModule} from "@ngxs/store";
+import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 
 
 
@@ -29,7 +33,11 @@ import {UserGuard} from "./guard/guard.guard";
     AngularFirestoreModule,
     HomeModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxsModule.forRoot([]
+      , { developmentMode: !environment.production }),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot(),
   ],
   providers: [UserGuard],
   bootstrap: [AppComponent]
