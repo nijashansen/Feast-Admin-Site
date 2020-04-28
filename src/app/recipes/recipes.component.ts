@@ -89,4 +89,8 @@ this.updateRecipe = this.formBuilder.group({
     this.recipesService.deleteRecipe(recipe);
     this.editState = false;
   }
+
+  goToHome() {
+    this.router.navigate(['/home'])
+  }
 }

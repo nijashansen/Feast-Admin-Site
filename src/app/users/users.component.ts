@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from "./shared/user.service";
 import {Observable} from "rxjs";
 import {AuthUser} from "./shared/user";
+import {Router} from "@angular/router";
 
 
 
@@ -17,7 +18,7 @@ export class UsersComponent implements OnInit {
   editState: boolean = false;
   userToEdit: AuthUser;
 
-  constructor(private us: UserService) { }
+  constructor(private us: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.users$ = this.us.getAllUsers();
@@ -43,6 +44,12 @@ export class UsersComponent implements OnInit {
     this.us.deleteUser(user);
   }
 
+  goToUserAdd() {
+    console.log('user add module')
+    this.router.navigate(['users/add']);
+  }
 
-
+  goToHome() {
+    this.router.navigate(['/home'])
+  }
 }

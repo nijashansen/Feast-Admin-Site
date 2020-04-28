@@ -1,22 +1,40 @@
+<button mat-stroked-button (click)="goToHome()" >Return Home</button>
+
 <div *ngFor="let user of users$ | async">
 <ul>
   <li> {{user.name}} </li>
+  <li> {{user.email}} </li>
   <li> {{user.uid}}</li>
-  <button mat-stroked-button *ngIf="!editState" (click)="editUser($event, user)">Update User</button>
+
+  <button color="primary" mat-stroked-button *ngIf="!editState" (click)="editUser($event, user)">Update User</button>
 
   <div *ngIf="editState && userToEdit.uid == user.uid">
     <form (ngSubmit)="updateUser(user)">
+
       <mat-form-field>
-        <input matInput type="text" placeholder="name" [(ngModel)]="user.name" name="name">
+        <input matInput type="text" placeholder="name" [(ngModel)]="user.name" name="Name">
       </mat-form-field>
 
       <br>
 
-      <button mat-stroked-button type="submit">Update User</button>
+      <mat-form-field>
+        <input matInput type="text" placeholder="email" [(ngModel)]="user.email" name="Email">
+      </mat-form-field>
+
+      <br>
+
+      <button mat-stroked-button color="primary" type="submit">Submit User</button>
       <button mat-stroked-button color="warn" (click)="deleteItem($event, user)" class="deleteBt">Delete User</button>
 
     </form>
   </div>
 
 </ul>
+
+</div>
+
+<div class="button-pos">
+<button (click)="goToUserAdd()" mat-fab color="primary">
+  <mat-icon>person_add</mat-icon>
+</button>
 </div>

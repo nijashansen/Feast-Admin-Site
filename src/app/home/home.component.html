@@ -2,7 +2,7 @@
 <h1>Front page</h1>
 
 <div *ngIf="auth.authState | async as user; else showLogin">
-  <h3>Hello {{ user.name }}!</h3>
+  <h3>Hello {{ user.displayName || user.name }}!</h3>
   <p>Your User Id = {{user.uid}}</p>
   <button mat-stroked-button color="warn" (click)="logout()">Logout</button>
 </div>
