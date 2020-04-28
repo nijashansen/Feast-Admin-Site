@@ -60,7 +60,7 @@ export class AddRecipeComponent implements OnInit {
     this.recipe = this.form.value;
 
     try {
-      this.recipesService.addProduct(this.recipe);
+      this.recipesService.addRecipe(this.recipe);
 
     } catch (err) {
       console.error(err);

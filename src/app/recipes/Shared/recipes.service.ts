@@ -29,7 +29,7 @@ getAllRecipes(): Observable<Recipe[]> {
   }
 
 
-  addProduct(recipe: Recipe): Observable<Recipe> {
+  addRecipe(recipe: Recipe): Observable<Recipe> {
     return from(
       this.fs
         .collection('Recipes')
