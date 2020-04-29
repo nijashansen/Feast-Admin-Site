@@ -24,14 +24,14 @@
             <input type="number" matInput placeholder="Amount In Grams" formControlName="amount">
           </mat-form-field>
 
-          <button mat-raised-button color="warn" (click)="deleteIngredient(i)">Delete</button>
+          <button type="button" mat-raised-button color="warn" (click)="deleteIngredient(i)">Delete</button>
 
         </div>
 
-        <button mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
+        <button type="button" mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
 
       </div>
-      <button mat-raised-button color="accent">Add Recipe</button>
+      <button type="submit" mat-raised-button color="accent">Add Recipe</button>
     </form>
 
   </div>

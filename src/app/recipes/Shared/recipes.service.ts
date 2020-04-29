@@ -3,6 +3,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {from, Observable} from 'rxjs';
 import {Recipe} from './recipe';
 import {map} from 'rxjs/operators';
+import {AuthUser} from "../../users/shared/user";
 
 @Injectable({
   providedIn: 'root'
@@ -54,8 +55,7 @@ getAllRecipes(): Observable<Recipe[]> {
     );
   }
 
-
-  updateProduct(recipe: Recipe): Observable<Recipe> {
+  updateRecipe(recipe: Recipe): Observable<Recipe> {
     return from( this.fs.doc(`Recipes/${recipe.id}`).update(recipe)).
     pipe( map(() => {
       return recipe; }

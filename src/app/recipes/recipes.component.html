@@ -17,7 +17,7 @@
         <mat-icon *ngIf="editState" (click)="clearState()" class="v-align-right">keyboard_arrow_up</mat-icon>
         <div *ngIf="recipeToEdit.id === recipe.id">
 
-          <form [formGroup]="updateRecipe" (ngSubmit)="submitHandler()">
+          <form [formGroup]="updateRecipe" (ngSubmit)="submitHandler(recipe)">
             <hr>
             <label>Name</label><br>
             <mat-form-field>
@@ -55,9 +55,9 @@
 
               </div>
               </div>
-            <button mat-raised-button color="primary" (click)="addIngToForm()">Add Ingredient</button>
-            <button mat-raised-button color="warn" (click)="deleteRecipe(recipe)">Delete Recipe</button>
-            <button mat-raised-button color="accent" (click)="submitHandler()">Update Recipe</button>
+            <button type="button" mat-raised-button color="primary" (click)="addIngToForm()">Add Ingredient</button>
+            <button type="button" mat-raised-button color="warn" (click)="deleteRecipe(recipe)">Delete Recipe</button>
+            <button type="submit" mat-raised-button color="accent">Update Recipe</button>
           </form>
         </div>
 

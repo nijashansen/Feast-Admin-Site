@@ -74,10 +74,9 @@ this.updateRecipe = this.formBuilder.group({
   }
 
 
-  async submitHandler() {
-    this.recipeToEdit = this.updateRecipe.value;
-    this.recipesService.updateProduct(this.recipeToEdit);
-    this.clearState();
+  async submitHandler(recipe: Recipe) {
+  this.recipesService.updateRecipe(recipe);
+  this.clearState();
   }
 
   deleteIngredient(i){
