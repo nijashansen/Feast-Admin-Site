@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+
 import {UserService} from "./shared/user.service";
-import {Observable} from "rxjs";
+
 import {AuthUser} from "./shared/user";
 import {Router} from "@angular/router";
-
+import {Observable} from "rxjs";
+import {Component, OnInit} from "@angular/core";
+import {first} from "rxjs/operators";
 
 
 @Component({
@@ -54,7 +56,8 @@ export class UsersComponent implements OnInit {
   }
 
   getNextSetOfUsers() {
-    this.us.getNextSetOfUsers();
-
+    this.users$ = this.us.getNextSetOfUsers();
   }
+
+
 }

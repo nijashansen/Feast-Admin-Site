@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
-import {from, Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {Injectable} from "@angular/core";
 import {AuthUser} from "./user";
-
+import {from, Observable} from "rxjs";
+import {AngularFirestore} from "@angular/fire/firestore";
+import {map} from "rxjs/operators";
 
 
 @Injectable({
@@ -12,11 +11,14 @@ import {AuthUser} from "./user";
 export class UserService {
   users: Observable<AuthUser[]>;
 
+
   constructor(private fs: AngularFirestore) {
   }
 
   getAllUsers(): Observable<AuthUser[]> {
-    return this.fs.collection<AuthUser>('Users', ref => ref.limit(8)).snapshotChanges().pipe(map(data => {
+    return this.fs.collection<AuthUser>('Users',
+        ref => ref.orderBy('name')
+          .limit(5)).snapshotChanges().pipe(map(data => {
       const newArray: AuthUser[] = [];
       data.forEach(doc => {
         newArray.push({
@@ -50,8 +52,22 @@ export class UserService {
 
   }
 
-
   getNextSetOfUsers() {
-
+    return this.fs.collection<AuthUser>('Users',
+        ref => ref.orderBy('name')
+          .startAfter(ref.path)
+          .limitToLast(5)).snapshotChanges().pipe(map(data => {
+      const newArray: AuthUser[] = [];
+      data.forEach(doc => {
+        newArray.push({
+          uid: doc.payload.doc.id,
+          name: doc.payload.doc.data().name,
+          email: doc.payload.doc.data().email
+        });
+      });
+      return newArray;
+    }));
   }
+
+
 }
