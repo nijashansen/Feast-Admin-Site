@@ -11,6 +11,7 @@ import {map} from "rxjs/operators";
 export class UserService {
   users: Observable<AuthUser[]>;
 
+  newArray: AuthUser[] = []
 
   constructor(private fs: AngularFirestore) {
   }
@@ -19,15 +20,15 @@ export class UserService {
     return this.fs.collection<AuthUser>('Users',
         ref => ref.orderBy('name')
           .limit(5)).snapshotChanges().pipe(map(data => {
-      const newArray: AuthUser[] = [];
+      this.newArray = [];
       data.forEach(doc => {
-        newArray.push({
+        this.newArray.push({
           uid: doc.payload.doc.id,
           name: doc.payload.doc.data().name,
           email: doc.payload.doc.data().email
         });
       });
-      return newArray;
+      return this.newArray;
     }));
   }
 
@@ -55,17 +56,19 @@ export class UserService {
   getNextSetOfUsers() {
     return this.fs.collection<AuthUser>('Users',
         ref => ref.orderBy('name')
-          .startAfter(ref.path)
+          .startAfter(ref.parent)
           .limitToLast(5)).snapshotChanges().pipe(map(data => {
-      const newArray: AuthUser[] = [];
+            this.newArray = []
       data.forEach(doc => {
-        newArray.push({
+        this.newArray.push({
           uid: doc.payload.doc.id,
           name: doc.payload.doc.data().name,
           email: doc.payload.doc.data().email
         });
       });
-      return newArray;
+      console.log(this.newArray)
+      return this.newArray;
+
     }));
   }
 

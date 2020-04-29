@@ -47,7 +47,6 @@ export class UsersComponent implements OnInit {
   }
 
   goToUserAdd() {
-    console.log('user add module')
     this.router.navigate(['users/add']);
   }
 
@@ -57,6 +56,10 @@ export class UsersComponent implements OnInit {
 
   getNextSetOfUsers() {
     this.users$ = this.us.getNextSetOfUsers();
+  }
+
+  getPrevSetOfUsers() {
+    this.users$ = this.us.getAllUsers();
   }
 
 
