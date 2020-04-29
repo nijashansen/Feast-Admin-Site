@@ -44,19 +44,17 @@ export class UserService {
     );
   }
 
-
   updateUser(user: AuthUser): Observable<AuthUser> {
     return from( this.fs.doc(`Users/${user.uid}`).update(user)).
     pipe( map(() => {
       return user; }
     ));
-
   }
 
   getNextSetOfUsers() {
     return this.fs.collection<AuthUser>('Users',
         ref => ref.orderBy('name')
-          .startAfter(ref.parent)
+          .startAfter(ref.id)
           .limitToLast(5)).snapshotChanges().pipe(map(data => {
             this.newArray = []
       data.forEach(doc => {
@@ -66,11 +64,7 @@ export class UserService {
           email: doc.payload.doc.data().email
         });
       });
-      console.log(this.newArray)
       return this.newArray;
-
     }));
   }
-
-
 }
