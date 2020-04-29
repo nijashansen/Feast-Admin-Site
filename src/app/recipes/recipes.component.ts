@@ -19,7 +19,7 @@ import {RecipesState} from './Shared/recipes.state';
 
 export class RecipesComponent implements OnInit {
 
-  //@Select(RecipesState.recipes)
+  @Select(RecipesState.recipes)
   recipes$: Observable<Recipe[]>;
 
   updateRecipe = new FormGroup({
@@ -36,17 +36,19 @@ export class RecipesComponent implements OnInit {
 
 
 
-  ngOnInit(){
-this.recipes$ = this.recipesService.getAllRecipes();
-//this.store.dispatch(new GetAllRecipes());
 
-this.updateRecipe = this.formBuilder.group({
+
+  ngOnInit(){
+
+    this.store.dispatch(new GetAllRecipes());
+
+    this.updateRecipe = this.formBuilder.group({
       name: '',
       estimatedTime: 0,
-    ingredients: this.formBuilder.array([this.addIngToForm()]),
-
-
-    });
+      ingName: '',
+      ingAmount: 0,
+      ingredients: this.formBuilder.array([])
+  });
   }
 
   editItem(event: Event, recipe: Recipe){
@@ -65,18 +67,21 @@ this.updateRecipe = this.formBuilder.group({
 
 
 
-  addIngToForm(){
-    const ing = this.formBuilder.group({
-      ingName: new FormControl(),
-      ingAmount: new FormControl()}
-      );
-    this.ingredients.push(ing);
+  addIngredient(){
+    const ingredient = this.formBuilder.group( {
+      ingName: '',
+      ingAmount: 0
+    });
+    this.ingredients.push(ingredient);
   }
 
 
-  async submitHandler(recipe: Recipe) {
-  this.recipesService.updateRecipe(recipe);
-  this.clearState();
+
+   submitHandler() {
+    let info;
+    info = this.updateRecipe.getRawValue();
+    this.recipesService.updateRecipe(info);
+    this.clearState();
   }
 
   deleteIngredient(i){
@@ -90,6 +95,6 @@ this.updateRecipe = this.formBuilder.group({
   }
 
   goToHome() {
-    this.router.navigate(['/home'])
+    this.router.navigate(['/home']);
   }
 }
