@@ -22,8 +22,6 @@ import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 @NgModule({
   declarations: [
     AppComponent,
-
-
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,9 @@ import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Component, OnInit} from "@angular/core";
 import {first} from "rxjs/operators";
+import {Selector, Store} from "@ngxs/store";
+import {GetAllUsers} from "./shared/user.action";
+import {UserState} from "./shared/user.state";
 
 
 @Component({
@@ -15,15 +18,16 @@ import {first} from "rxjs/operators";
 })
 export class UsersComponent implements OnInit {
 
+  @Selector(UserState.users)
   users$: Observable<AuthUser[]>
 
   editState: boolean = false;
   userToEdit: AuthUser;
 
-  constructor(private us: UserService, private router: Router) { }
+  constructor(private store: Store, private router: Router) { }
 
   ngOnInit(): void {
-    this.users$ = this.us.getAllUsers();
+    this.store.dispatch(new GetAllUsers())
   }
 
   editUser(event, user){

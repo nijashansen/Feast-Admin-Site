@@ -3,6 +3,7 @@ import {AuthUser} from "./user";
 import {from, Observable} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {map} from "rxjs/operators";
+import {AuthenticationService} from "../../services/authentication.service";
 
 
 @Injectable({
@@ -13,7 +14,7 @@ export class UserService {
 
   newArray: AuthUser[] = []
 
-  constructor(private fs: AngularFirestore) {
+  constructor(private fs: AngularFirestore, private auth: AuthenticationService) {
   }
 
   getAllUsers(): Observable<AuthUser[]> {
@@ -66,5 +67,13 @@ export class UserService {
       });
       return this.newArray;
     }));
+  }
+
+  createUserWithEmailAndPassword(email: string, password: string, name: string) {
+    return this.auth.createUserWithEmailAndPassword(
+      email,
+      password,
+      name
+    )
   }
 }
