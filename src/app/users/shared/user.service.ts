@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
 import {AuthUser} from "./user";
 import {from, Observable} from "rxjs";
-import {AngularFirestore} from "@angular/fire/firestore";
+import {AngularFirestore, Query} from "@angular/fire/firestore";
 import {map} from "rxjs/operators";
+import {AuthenticationService} from "../../services/authentication.service";
 
 
 @Injectable({
@@ -13,7 +14,8 @@ export class UserService {
 
   newArray: AuthUser[] = []
 
-  constructor(private fs: AngularFirestore) {
+
+  constructor(private fs: AngularFirestore, private auth: AuthenticationService) {
   }
 
   getAllUsers(): Observable<AuthUser[]> {
@@ -54,17 +56,25 @@ export class UserService {
   getNextSetOfUsers() {
     return this.fs.collection<AuthUser>('Users',
         ref => ref.orderBy('name')
-          .startAfter(ref.id)
-          .limitToLast(5)).snapshotChanges().pipe(map(data => {
+          .startAfter(ref.doc().path)
+          .limit(5)).snapshotChanges().pipe(map(data => {
             this.newArray = []
       data.forEach(doc => {
         this.newArray.push({
           uid: doc.payload.doc.id,
           name: doc.payload.doc.data().name,
-          email: doc.payload.doc.data().email
+          email: doc.payload.doc.data().email,
         });
       });
       return this.newArray;
     }));
+  }
+
+  createUserWithEmailAndPassword(email: string, password: string, name: string) {
+    return this.auth.createUserWithEmailAndPassword(
+      email,
+      password,
+      name
+    )
   }
 }

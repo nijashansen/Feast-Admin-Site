@@ -64,14 +64,8 @@ export class RecipesState {
           ...state,
         }
         );
-
     })
     );
   }
-
-
-
-
-
 }
 

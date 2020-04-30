@@ -56,7 +56,7 @@ export class AuthenticationService {
 
   createUserWithEmailAndPassword(email: string, password: string, name?: string) {
     this.afAuth.createUserWithEmailAndPassword(email, password).then(cred => {
-      return this.fs.collection('Users').doc(cred.user.uid).set({
+      this.fs.collection('Users').doc(cred.user.uid).set({
         name: name,
         email: cred.user.email
       });

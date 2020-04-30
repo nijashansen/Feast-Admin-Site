@@ -1,11 +1,10 @@
-
-import {UserService} from "./shared/user.service";
-
 import {AuthUser} from "./shared/user";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Component, OnInit} from "@angular/core";
-import {first} from "rxjs/operators";
+import {Select, Store} from "@ngxs/store";
+import {DeleteUser, GetAllUsers, GetNextSetOfUsers, UpdateUser} from "./shared/user.action";
+import {UserState} from "./shared/user.state";
 
 
 @Component({
@@ -15,15 +14,16 @@ import {first} from "rxjs/operators";
 })
 export class UsersComponent implements OnInit {
 
+  @Select(UserState.users)
   users$: Observable<AuthUser[]>
 
   editState: boolean = false;
   userToEdit: AuthUser;
 
-  constructor(private us: UserService, private router: Router) { }
+  constructor(private store: Store, private router: Router) { }
 
   ngOnInit(): void {
-    this.users$ = this.us.getAllUsers();
+    this.store.dispatch(new GetAllUsers())
   }
 
   editUser(event, user){
@@ -37,13 +37,13 @@ export class UsersComponent implements OnInit {
   }
 
   updateUser(user: AuthUser) {
-    this.us.updateUser(user);
+    this.store.dispatch(new UpdateUser(user))
     this.clearState();
   }
 
   deleteItem($event: MouseEvent, user: AuthUser) {
     this.clearState();
-    this.us.deleteUser(user);
+    this.store.dispatch(new DeleteUser(user))
   }
 
   goToUserAdd() {
@@ -55,11 +55,11 @@ export class UsersComponent implements OnInit {
   }
 
   getNextSetOfUsers() {
-    this.users$ = this.us.getNextSetOfUsers();
+    this.users$ = this.store.dispatch(new GetNextSetOfUsers())
   }
 
   getPrevSetOfUsers() {
-    this.users$ = this.us.getAllUsers();
+    this.users$ = this.store.dispatch(new GetAllUsers());
   }
 
 

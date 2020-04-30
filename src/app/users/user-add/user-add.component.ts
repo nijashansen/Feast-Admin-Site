@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {AngularFireAuth} from "@angular/fire/auth";
-import {AuthenticationService} from "../../services/authentication.service";
+import {Store} from "@ngxs/store";
+import {CreateUser} from "../shared/user.action";
 
 @Component({
   selector: 'app-user-add',
@@ -11,7 +11,7 @@ import {AuthenticationService} from "../../services/authentication.service";
 export class UserAddComponent implements OnInit {
   createForm: FormGroup;
 
-  constructor(private auth: AuthenticationService, private fb: FormBuilder) { }
+  constructor(private store: Store, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.createForm = this.fb.group({
@@ -26,6 +26,6 @@ export class UserAddComponent implements OnInit {
     const password = this.createForm.value.password
     const name = this.createForm.value.name
 
-    this.auth.createUserWithEmailAndPassword(email, password, name);
+    this.store.dispatch(new CreateUser(email, password, name))
   }
 }
