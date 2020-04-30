@@ -9,11 +9,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./add-recipe.component.css']
 })
 export class AddRecipeComponent implements OnInit {
-  recipeToAdd: Recipe = {
-    ingredients: [],
-    estimatedTime: 0,
-    name: ''
-  };
+
 
   form: FormGroup;
   recipe: Recipe = {

@@ -15,6 +15,7 @@ import {environment} from "../environments/environment";
 import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
 import {NgxsModule} from "@ngxs/store";
 import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
+import {RecipesState} from "./recipes/Shared/recipes.state";
 
 
 
@@ -32,7 +33,7 @@ import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
     HomeModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([]
+    NgxsModule.forRoot([RecipesState]
       , { developmentMode: !environment.production }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
