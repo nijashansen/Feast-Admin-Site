@@ -18,39 +18,27 @@
         <div *ngIf="recipeToEdit.id === recipe.id">
 
           <form [formGroup]="updateRecipe" (ngSubmit)="submitHandler()">
-            <hr>
+            <!--<label formControlName="id">{{recipe.id}}</label>
+            --><hr>
             <label>Name</label><br>
             <mat-form-field>
-              <input type="text" matInput placeholder="{{recipe.name}}" formControlName="name">
+              <input type="text" matInput placeholder="{{recipe.name}}" value="{{recipe.name}}" formControlName="name">
             </mat-form-field><br>
             <label>Estimated Time</label><br>
             <mat-form-field>
-              <input type="number" matInput placeholder="{{recipe.estimatedTime}}" formControlName="estimatedTime">
+              <input type="number" matInput placeholder="{{recipe.estimatedTime}}" value="{{recipe.estimatedTime}}" formControlName="estimatedTime">
             </mat-form-field><br>
             <label>Ingredients</label>
-
-            <div *ngFor="let ing of recipe.ingredients">
-              <label>Name</label>
-              <mat-form-field>
-                <input type="text" matInput placeholder="{{ing.name}}" formControlName="ingName">
-              </mat-form-field>
-
-              <label>Amount</label>
-              <mat-form-field>
-                <input type="text" matInput placeholder="{{ing.amount}}" formControlName="ingAmount">
-              </mat-form-field>
-            </div>
 
             <div formArrayName="ingredients" *ngFor="let ing of ingredients.controls; let i = index ">
                 <div formGroupName="{{i}}">
 
                   <mat-form-field>
-                    <input type="text" matInput placeholder="Name" formControlName="ingName">
-
+                    <input type="text" matInput placeholder="Name" formControlName="name">
                   </mat-form-field>
 
                   <mat-form-field class="spacerIng">
-                    <input type="number" matInput placeholder="Amount In Grams" formControlName="ingAmount">
+                    <input type="number" matInput placeholder="Amount In Grams" formControlName="amount">
                   </mat-form-field>
 
                 <button type="button" mat-raised-button color="warn" (click)="deleteIngredient(i)">Delete</button>

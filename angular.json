@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "Feast-Admin-Site"
+  "defaultProject": "Feast-Admin-Site",
+  "cli": {
+    "analytics": "c8420c0f-5996-4428-ac8b-06d7162305a5"
+  }
 }
