@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Component, OnInit} from "@angular/core";
 import {Select, Store} from "@ngxs/store";
-import {DeleteUser, GetAllUsers, UpdateUser} from "./shared/user.action";
+import {DeleteUser, GetAllUsers, GetNextSetOfUsers, UpdateUser} from "./shared/user.action";
 import {UserState} from "./shared/user.state";
 
 
@@ -37,13 +37,13 @@ export class UsersComponent implements OnInit {
   }
 
   updateUser(user: AuthUser) {
-    this.store.dispatch(new UpdateUser(user));
+    this.store.dispatch(new UpdateUser(user))
     this.clearState();
   }
 
   deleteItem($event: MouseEvent, user: AuthUser) {
     this.clearState();
-    this.store.dispatch(new DeleteUser(user));
+    this.store.dispatch(new DeleteUser(user))
   }
 
   goToUserAdd() {
@@ -55,11 +55,11 @@ export class UsersComponent implements OnInit {
   }
 
   getNextSetOfUsers() {
-    this.users$ = this.us.getNextSetOfUsers();
+    this.users$ = this.store.dispatch(new GetNextSetOfUsers())
   }
 
   getPrevSetOfUsers() {
-    this.users$ = this.us.getAllUsers();
+    this.users$ = this.store.dispatch(new GetAllUsers());
   }
 
 

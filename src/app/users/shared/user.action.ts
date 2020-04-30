@@ -27,3 +27,10 @@ export class UpdateUser {
   constructor(public user: AuthUser) {
   }
 }
+
+export class GetNextSetOfUsers {
+  static readonly type = '[AuthUser] GetNextSetOfUsers';
+
+  constructor() {
+  }
+}

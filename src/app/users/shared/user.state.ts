@@ -2,8 +2,8 @@
 import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {Injectable} from '@angular/core';
 
-import {CreateUser, DeleteUser, GetAllUsers, UpdateUser} from "./user.action";
-import {first, tap} from "rxjs/operators";
+import {CreateUser, DeleteUser, GetAllUsers, GetNextSetOfUsers, UpdateUser} from "./user.action";
+import {first, last, tap} from "rxjs/operators";
 import {AuthUser} from "./user";
 import {UserService} from "./user.service";
 import set = Reflect.set;
@@ -74,6 +74,20 @@ export class UserState {
         });
       })
     );
+  }
+
+  @Action(GetNextSetOfUsers)
+  getNextSetOfUsers({getState, setState}: StateContext<UserStateModel>){
+    const state = getState();
+    return this.userService
+      .getNextSetOfUsers(last()).pipe(
+        tap(allUsers => {
+          setState({
+            ...state,
+            users: allUsers,
+          });
+        })
+      );
   }
 }
 
