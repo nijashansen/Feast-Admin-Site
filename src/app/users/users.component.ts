@@ -1,13 +1,9 @@
-
-import {UserService} from "./shared/user.service";
-
 import {AuthUser} from "./shared/user";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Component, OnInit} from "@angular/core";
-import {first} from "rxjs/operators";
-import {Selector, Store} from "@ngxs/store";
-import {GetAllUsers} from "./shared/user.action";
+import {Select, Store} from "@ngxs/store";
+import {DeleteUser, GetAllUsers, UpdateUser} from "./shared/user.action";
 import {UserState} from "./shared/user.state";
 
 
@@ -18,7 +14,7 @@ import {UserState} from "./shared/user.state";
 })
 export class UsersComponent implements OnInit {
 
-  @Selector(UserState.users)
+  @Select(UserState.users)
   users$: Observable<AuthUser[]>
 
   editState: boolean = false;
@@ -41,13 +37,13 @@ export class UsersComponent implements OnInit {
   }
 
   updateUser(user: AuthUser) {
-    this.us.updateUser(user);
+    this.store.dispatch(new UpdateUser(user));
     this.clearState();
   }
 
   deleteItem($event: MouseEvent, user: AuthUser) {
     this.clearState();
-    this.us.deleteUser(user);
+    this.store.dispatch(new DeleteUser(user));
   }
 
   goToUserAdd() {
