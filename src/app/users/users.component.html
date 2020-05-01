@@ -1,6 +1,6 @@
 <button mat-stroked-button (click)="goToHome()" >Return Home</button>
 
-<div *ngFor="let user of users$ | async">
+<div *ngFor="let user of (users$ | async)">
 <ul>
   <li> {{user.name}} </li>
   <li> {{user.email}} </li>
@@ -34,6 +34,7 @@
 
 <div *ngIf="users$ | async">
 <button class="UsersBtn" mat-button (click)="getPrevSetOfUsers()">Get Prev Set Of Users</button>
+  <label>{{page$ | async}}</label>
 <button class="UsersBtn" mat-button (click)="getNextSetOfUsers()">Get Next Set Of Users</button>
 </div>
 

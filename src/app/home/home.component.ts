@@ -34,6 +34,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['users']);
   }
 
+  goToUserRecipes() {
+    this.router.navigate(['userRecipes']);
+  }
+
   loginWithGoogle() {
     this.auth.singInWithGoogle();
   }
