@@ -80,7 +80,7 @@ export class UserState {
   getNextSetOfUsers({getState, setState}: StateContext<UserStateModel>){
     const state = getState();
     return this.userService
-      .getNextSetOfUsers(last()).pipe(
+      .getNextSetOfUsers().pipe(
         tap(allUsers => {
           setState({
             ...state,
