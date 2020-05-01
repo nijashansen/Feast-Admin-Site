@@ -1,8 +1,8 @@
-import { AuthUser } from "./user";
+import {AuthUser} from './user';
 
 
 export class GetAllUsers {
-  static readonly type = '[AuthUser[]] GetAllUsers';
+  static readonly type = '[AuthUser] GetAllUsers';
 
   constructor() {
   }
@@ -11,7 +11,8 @@ export class GetAllUsers {
 export class DeleteUser {
   static readonly type = '[AuthUser] DeleteUser';
 
-  constructor(public user: AuthUser) {}
+  constructor(public user: AuthUser) {
+  }
 }
 
 export class CreateUser {
@@ -31,6 +32,13 @@ export class UpdateUser {
 export class GetNextSetOfUsers {
   static readonly type = '[AuthUser] GetNextSetOfUsers';
 
-  constructor() {
+  constructor(public lastVisible: string) {
+  }
+}
+
+export class GetPriorSetOfUsers {
+  static readonly type = '[AuthUser] GetPriorSetOfUsers';
+
+  constructor(public firstVisible: string) {
   }
 }

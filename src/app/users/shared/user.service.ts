@@ -1,9 +1,10 @@
-import {Injectable} from "@angular/core";
-import {AuthUser} from "./user";
-import {from, Observable} from "rxjs";
-import {AngularFirestore, Query} from "@angular/fire/firestore";
-import {map} from "rxjs/operators";
-import {AuthenticationService} from "../../services/authentication.service";
+import {Injectable} from '@angular/core';
+import {AuthUser} from './user';
+import {from, Observable, of} from 'rxjs';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {catchError, map} from 'rxjs/operators';
+import {AuthenticationService} from '../../services/authentication.service';
+import {UserPage} from './UserPage';
 
 
 @Injectable({
@@ -12,16 +13,17 @@ import {AuthenticationService} from "../../services/authentication.service";
 export class UserService {
   users: Observable<AuthUser[]>;
 
-  newArray: AuthUser[] = []
+  newArray: AuthUser[] = [];
 
 
   constructor(private fs: AngularFirestore, private auth: AuthenticationService) {
   }
 
-  getAllUsers(): Observable<AuthUser[]> {
+
+  getAllUsers(): Observable<UserPage> {
     return this.fs.collection<AuthUser>('Users',
-        ref => ref.orderBy('name')
-          .limit(5)).snapshotChanges().pipe(map(data => {
+      ref => ref.orderBy('email')
+        .limit(5)).snapshotChanges().pipe(map(data => {
       this.newArray = [];
       data.forEach(doc => {
         this.newArray.push({
@@ -30,7 +32,26 @@ export class UserService {
           email: doc.payload.doc.data().email
         });
       });
-      return this.newArray;
+      return {
+        users: this.newArray,
+        lastVisible: data[data.length - 1].payload.doc.data().email,
+        firstVisible: data[0].payload.doc.data().email
+      } as UserPage;
+    }));
+  }
+
+  getLastUser(): Observable<string> {
+    return this.fs.collection<AuthUser>('Users', ref => ref.orderBy('email', 'desc')
+      .limit(1)).valueChanges().pipe(map(data => {
+      console.log(data);
+      return data[0].email; // .payload.doc.data().email;
+    }));
+  }
+
+  getFirstUser(): Observable<string> {
+    return this.fs.collection<AuthUser>('Users', ref => ref.orderBy('email')
+      .limit(1)).valueChanges().pipe(map(data => {
+      return data[0].email; //.payload.doc.data().email;
     }));
   }
 
@@ -47,26 +68,59 @@ export class UserService {
   }
 
   updateUser(user: AuthUser): Observable<AuthUser> {
-    return from( this.fs.doc(`Users/${user.uid}`).update(user)).
-    pipe( map(() => {
-      return user; }
+    return from(this.fs.doc(`Users/${user.uid}`).update(user)).pipe(map(() => {
+        return user;
+      }
     ));
   }
 
-  getNextSetOfUsers() {
+  getNextSetOfUsers(lastVisible: string) {
     return this.fs.collection<AuthUser>('Users',
-        ref => ref.orderBy('name')
-          .startAfter(ref.doc().path)
-          .limit(5)).snapshotChanges().pipe(map(data => {
-            this.newArray = []
-      data.forEach(doc => {
-        this.newArray.push({
-          uid: doc.payload.doc.id,
-          name: doc.payload.doc.data().name,
-          email: doc.payload.doc.data().email,
+      ref => ref.orderBy('email').startAfter(lastVisible)
+        .limit(5)).snapshotChanges().pipe(map(data => {
+      if (data.length > 0) {
+        this.newArray = [];
+        data.forEach(doc => {
+          this.newArray.push({
+            uid: doc.payload.doc.id,
+            name: doc.payload.doc.data().name,
+            email: doc.payload.doc.data().email
+          });
         });
-      });
-      return this.newArray;
+        return {
+          users: this.newArray,
+          lastVisible: data[data.length - 1].payload.doc.data().email,
+          firstVisible: data[0].payload.doc.data().email
+        } as UserPage;
+      }
+    })).pipe(catchError(err => {
+      console.log(err);
+      return of(null);
+    }));
+  }
+
+  getPriorSetOfUsers(firstVisible: string) {
+    return this.fs.collection<AuthUser>('Users',
+      ref => ref.orderBy('email').endBefore(firstVisible)
+        .limitToLast(5)).snapshotChanges().pipe(map(data => {
+      if (data.length > 0) {
+        this.newArray = [];
+        data.forEach(doc => {
+          this.newArray.push({
+            uid: doc.payload.doc.id,
+            name: doc.payload.doc.data().name,
+            email: doc.payload.doc.data().email
+          });
+        });
+        return {
+          users: this.newArray,
+          lastVisible: data[data.length - 1].payload.doc.data().email,
+          firstVisible: data[0].payload.doc.data().email
+        } as UserPage;
+      }
+    })).pipe(catchError(err => {
+      console.log(err);
+      return of(null);
     }));
   }
 
@@ -75,6 +129,6 @@ export class UserService {
       email,
       password,
       name
-    )
+    );
   }
 }
