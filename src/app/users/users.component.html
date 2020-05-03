@@ -1,46 +1,46 @@
-<button mat-stroked-button (click)="goToHome()" >Return Home</button>
+<button mat-stroked-button (click)="goToHome()">Return Home</button>
 
 <div *ngFor="let user of (users$ | async)">
-<ul>
-  <li> {{user.name}} </li>
-  <li> {{user.email}} </li>
-  <li> {{user.uid}}</li>
+  <ul>
+    <li> {{user.name}} </li>
+    <li> {{user.email}} </li>
+    <li> {{user.uid}}</li>
 
-  <button color="primary" mat-stroked-button *ngIf="!editState" (click)="editUser($event, user)">Update User</button>
+    <button color="primary" mat-stroked-button *ngIf="!editState" (click)="editUser($event, user)">Update User</button>
 
-  <div *ngIf="editState && userToEdit.uid == user.uid">
-    <form (ngSubmit)="updateUser(user)">
+    <div *ngIf="editState && userToEdit.uid == user.uid">
+      <form (ngSubmit)="updateUser(user)">
 
-      <mat-form-field>
-        <input matInput type="text" placeholder="name" [(ngModel)]="user.name" name="Name">
-      </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" placeholder="name" [(ngModel)]="user.name" name="Name">
+        </mat-form-field>
 
-      <br>
+        <br>
 
-      <mat-form-field>
-        <input matInput type="text" placeholder="email" [(ngModel)]="user.email" name="Email">
-      </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" placeholder="email" [(ngModel)]="user.email" name="Email">
+        </mat-form-field>
 
-      <br>
+        <br>
 
-      <button mat-stroked-button color="primary" type="submit">Submit User</button>
-      <button mat-stroked-button color="warn" (click)="deleteItem($event, user)">Delete User</button>
+        <button mat-stroked-button color="primary" type="submit">Submit User</button>
+        <button mat-stroked-button color="warn" (click)="deleteItem($event, user)">Delete User</button>
 
-    </form>
-  </div>
+      </form>
+    </div>
 
-</ul>
+  </ul>
 </div>
 
 <div *ngIf="users$ | async">
-<button class="UsersBtn" mat-button (click)="getPrevSetOfUsers()">Get Prev Set Of Users</button>
+  <button class="UsersBtn" mat-button (click)="getPrevSetOfUsers()">Get Prev Set Of Users</button>
   <label>{{page$ | async}}</label>
-<button class="UsersBtn" mat-button (click)="getNextSetOfUsers()">Get Next Set Of Users</button>
+  <button class="UsersBtn" mat-button (click)="getNextSetOfUsers()">Get Next Set Of Users</button>
 </div>
 
 
 <div class="button-pos">
-<button (click)="goToUserAdd()" mat-fab color="primary">
-  <mat-icon>person_add</mat-icon>
-</button>
+  <button (click)="goToUserAdd()" mat-fab color="primary">
+    <mat-icon>person_add</mat-icon>
+  </button>
 </div>

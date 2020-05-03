@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { UserRecipesRoutingModule } from './user-recipes-routing.module';
-import { UserRecipesComponent } from './user-recipes.component';
+import {UserRecipesRoutingModule} from './user-recipes-routing.module';
+import {UserRecipesComponent} from './user-recipes.component';
 
 
 @NgModule({
@@ -12,4 +12,5 @@ import { UserRecipesComponent } from './user-recipes.component';
     UserRecipesRoutingModule
   ]
 })
-export class UserRecipesModule { }
+export class UserRecipesModule {
+}

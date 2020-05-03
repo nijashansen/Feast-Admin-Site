@@ -1,46 +1,46 @@
 <div class="font">
-<h1>Front page</h1>
+  <h1>Front page</h1>
 
-<div *ngIf="auth.authState | async as user; else showLogin">
-  <h3>Hello {{ user.displayName || user.name }}!</h3>
-  <p>Your User Id = {{user.uid}}</p>
-  <button mat-stroked-button color="warn" (click)="logout()">Logout</button>
-</div>
-<ng-template #showLogin>
-  <p>Please login.</p>
-  <button mat-stroked-button (click)="loginWithGoogle()">Login with Google</button>
-  <button mat-stroked-button (click)="loginWithEmailMethod()">Login with Email and Password</button>
-</ng-template>
+  <div *ngIf="auth.authState | async as user; else showLogin">
+    <h3>Hello {{ user.displayName || user.name }}!</h3>
+    <p>Your User Id = {{user.uid}}</p>
+    <button mat-stroked-button color="warn" (click)="logout()">Logout</button>
+  </div>
+  <ng-template #showLogin>
+    <p>Please login.</p>
+    <button mat-stroked-button (click)="loginWithGoogle()">Login with Google</button>
+    <button mat-stroked-button (click)="loginWithEmailMethod()">Login with Email and Password</button>
+  </ng-template>
 
-<div *ngIf="loginWithEmail == true">
-  <form [formGroup]="loginForm">
+  <div *ngIf="loginWithEmail == true">
+    <form [formGroup]="loginForm">
 
-    <mat-form-field>
-      <input matInput type="text" formControlName="email" placeholder="Email">
-    </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" formControlName="email" placeholder="Email">
+      </mat-form-field>
 
-    <br>
+      <br>
 
-    <mat-form-field>
-      <input matInput type="password" formControlName="password" placeholder="Password">
-    </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" formControlName="password" placeholder="Password">
+      </mat-form-field>
 
-    <br>
+      <br>
 
-    <button mat-stroked-button (click)="loginWithEmailPassword()" routerLink="/home">Login</button>
-    <button mat-stroked-button (click)="signUpWithEmailPassword()" routerLink="/home">sign up</button>
+      <button mat-stroked-button (click)="loginWithEmailPassword()" routerLink="/home">Login</button>
+      <button mat-stroked-button (click)="signUpWithEmailPassword()" routerLink="/home">sign up</button>
 
-  </form>
+    </form>
 
-</div>
+  </div>
 
-<div *ngIf="auth.authState | async">
+  <div *ngIf="auth.authState | async">
 
-  <button mat-stroked-button (click)="goToRecipes()">Go To Recipes</button>
-  <button mat-stroked-button (click)="goToUsers()">Go To Users</button>
-  <button mat-stroked-button (click)="goToUserRecipes()">Go To User Recipes</button>
+    <button mat-stroked-button (click)="goToRecipes()">Go To Recipes</button>
+    <button mat-stroked-button (click)="goToUsers()">Go To Users</button>
+    <button mat-stroked-button (click)="goToUserRecipes()">Go To User Recipes</button>
 
-</div>
+  </div>
 
 </div>
 

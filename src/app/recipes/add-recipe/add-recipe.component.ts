@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Recipe} from '../Shared/recipe';
 import {RecipesService} from '../Shared/recipes.service';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-add-recipe',
@@ -21,7 +21,8 @@ export class AddRecipeComponent implements OnInit {
   loading = false;
   success = false;
 
-  constructor(private recipesService: RecipesService,  private formBuilder: FormBuilder) { }
+  constructor(private recipesService: RecipesService, private formBuilder: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -33,11 +34,11 @@ export class AddRecipeComponent implements OnInit {
 
   }
 
-  get ingredients(){
+  get ingredients() {
     return this.form.get('ingredients') as FormArray;
   }
 
-  addIngredient(){
+  addIngredient() {
     const ingredient = this.formBuilder.group({
       name: '',
       amount: 0
@@ -45,7 +46,7 @@ export class AddRecipeComponent implements OnInit {
     this.ingredients.push(ingredient);
   }
 
-  deleteIngredient(i){
+  deleteIngredient(i) {
     this.ingredients.removeAt(i);
   }
 
