@@ -83,20 +83,13 @@ export class UserState {
 
   @Action(CreateUser)
   createUser({getState, setState, dispatch}: StateContext<UserStateModel>, action: CreateUser) {
-    return this.userService.createUserWithEmailAndPassword(action.email, action.password, action.name);
+    return this.userService.createUserWithEmailAndPassword(action.email, action.password);
 
   }
 
   @Action(UpdateUser)
   updateUser({getState, setState, dispatch}: StateContext<UserStateModel>, action: UpdateUser) {
-    const state = getState();
-    return this.userService.updateUser(action.user).pipe(
-      tap(() => {
-        setState({
-          ...state,
-        });
-      })
-    );
+    return this.userService.updateUser(action.user);
   }
 
   @Action(GetNextSetOfUsers)

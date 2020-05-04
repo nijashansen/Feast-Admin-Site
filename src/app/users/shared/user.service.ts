@@ -29,7 +29,8 @@ export class UserService {
         this.newArray.push({
           uid: doc.payload.doc.id,
           name: doc.payload.doc.data().name,
-          email: doc.payload.doc.data().email
+          email: doc.payload.doc.data().email,
+          role: doc.payload.doc.data().role
         });
       });
       return {
@@ -84,7 +85,8 @@ export class UserService {
           this.newArray.push({
             uid: doc.payload.doc.id,
             name: doc.payload.doc.data().name,
-            email: doc.payload.doc.data().email
+            email: doc.payload.doc.data().email,
+            role: doc.payload.doc.data().role
           });
         });
         return {
@@ -109,7 +111,8 @@ export class UserService {
           this.newArray.push({
             uid: doc.payload.doc.id,
             name: doc.payload.doc.data().name,
-            email: doc.payload.doc.data().email
+            email: doc.payload.doc.data().email,
+            role: doc.payload.doc.data().role
           });
         });
         return {
@@ -124,11 +127,10 @@ export class UserService {
     }));
   }
 
-  createUserWithEmailAndPassword(email: string, password: string, name: string) {
+  createUserWithEmailAndPassword(email: string, password: string) {
     return this.auth.createUserWithEmailAndPassword(
       email,
-      password,
-      name
+      password
     );
   }
 }

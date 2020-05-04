@@ -30,7 +30,10 @@ export class RecipesComponent implements OnInit {
   editState = false;
   recipeToEdit: Recipe;
 
-  constructor(private recipesService: RecipesService, private router: Router, private formBuilder: FormBuilder, private store: Store) {
+  constructor(private recipesService: RecipesService,
+              private router: Router,
+              private formBuilder: FormBuilder,
+              private store: Store) {
   }
 
   get ingredients() {

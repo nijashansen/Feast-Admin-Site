@@ -11,11 +11,11 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {UserAddComponent} from './user-add/user-add.component';
 import {MatInputModule} from '@angular/material/input';
-import {UserPaginationComponent} from './user-pagination/user-pagination.component';
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
-  declarations: [UsersComponent, UserAddComponent, UserPaginationComponent],
+  declarations: [UsersComponent, UserAddComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,
@@ -26,7 +26,8 @@ import {UserPaginationComponent} from './user-pagination/user-pagination.compone
     MatChipsModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ]
 })
 export class UsersModule {
