@@ -8,8 +8,7 @@
     <ul *ngFor=" let recipe of recipes$ | async">
       <div class="mat-card">
         <div *ngIf="!editState">
-          <div class="mat-card-title">
-            {{recipe.name}}
+          <div class="mat-card-title">{{recipe.name}}
           </div>
           <mat-icon class="v-align-right" *ngIf="!editState" (click)="editItem($event, recipe)" style="flex: 1;">edit
           </mat-icon>
@@ -22,6 +21,7 @@
               <!--<label formControlName="id">{{recipe.id}}</label>
               -->
               <hr>
+
               <label>Name</label><br>
               <mat-form-field>
                 <input type="text" matInput placeholder="{{recipe.name}}" value="{{recipe.name}}"

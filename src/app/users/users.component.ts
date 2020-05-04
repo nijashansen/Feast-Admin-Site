@@ -130,4 +130,7 @@ export class UsersComponent implements OnInit {
   }
 
 
+  onSelect(uid: string) {
+  this.router.navigate(['/userRecipes', uid]);
+  }
 }

@@ -8,6 +8,7 @@
     <li> Role: {{user.role}}</li>
 
     <button color="primary" mat-stroked-button *ngIf="!editState" (click)="editUser($event, user)">Update User</button>
+    <button mat-stroked-button color="accent" (click)="onSelect(user.uid)">Go To Users Recipes</button>
 
     <div *ngIf="editState && userToEdit.uid == user.uid">
       <form [formGroup]="updateUserForm" (ngSubmit)="updateUser()">

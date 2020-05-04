@@ -17,11 +17,14 @@ import {NgxsModule} from '@ngxs/store';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {RecipesState} from './recipes/Shared/recipes.state';
 import {UserState} from './users/shared/user.state';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import {UserState} from './users/shared/user.state';
       , {developmentMode: !environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
+    MatIconModule,
   ],
   providers: [UserGuard],
   bootstrap: [AppComponent]
