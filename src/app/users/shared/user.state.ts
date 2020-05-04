@@ -83,7 +83,7 @@ export class UserState {
 
   @Action(CreateUser)
   createUser({getState, setState, dispatch}: StateContext<UserStateModel>, action: CreateUser) {
-    return this.userService.createUserWithEmailAndPassword(action.email, action.password);
+    return this.userService.createUserWithEmailAndPassword(action.email, action.password, action.user);
 
   }
 

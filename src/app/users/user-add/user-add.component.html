@@ -19,7 +19,11 @@
   <br>
 
   <mat-form-field>
-    <input matInput type="text" formControlName="role" placeholder="Role">
+    <mat-select [(value)]="createForm.value.role">
+      <mat-option *ngFor="let role of roles" [value]="role">
+        {{role}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <br>
