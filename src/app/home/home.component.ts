@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
-import {AuthenticationService} from "../services/authentication.service";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthenticationService} from '../services/authentication.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +16,8 @@ export class HomeComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              public auth: AuthenticationService,) { }
+              public auth: AuthenticationService,) {
+  }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -48,29 +48,29 @@ export class HomeComponent implements OnInit {
   }
 
   loginWithEmailPassword() {
-    const email = this.loginForm.value.email
-    const password = this.loginForm.value.password
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
 
     try {
       this.auth.signInWithEmailPassword(email, password);
       this.loginWithEmail = false;
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 
   signUpWithEmailPassword() {
-    const email = this.loginForm.value.email
-    const password = this.loginForm.value.password
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
 
     this.auth.createUserWithEmailAndPassword(email, password);
   }
 
   loginWithEmailMethod() {
     if (this.loginWithEmail == true) {
-      this.loginWithEmail = false
+      this.loginWithEmail = false;
     } else if (this.loginWithEmail == false) {
-      this.loginWithEmail = true
+      this.loginWithEmail = true;
     }
   }
 }

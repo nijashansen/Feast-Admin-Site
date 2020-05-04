@@ -60,11 +60,11 @@ export class RecipesComponent implements OnInit {
     this.updateRecipe.patchValue({estimatedTime: recipe.estimatedTime});
     this.updateRecipe.value.ingredients.fill(recipe.ingredients);
     const formArray = new FormArray([]);
-    for (const ing of recipe.ingredients){
+    for (const ing of recipe.ingredients) {
       const ingredient = this.formBuilder.group({
         name: ing.name,
         amount: ing.amount
-      })
+      });
       formArray.push(ingredient);
     }
     this.updateRecipe.setControl('ingredients', formArray);

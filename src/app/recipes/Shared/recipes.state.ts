@@ -2,8 +2,8 @@ import {Recipe} from './recipe';
 import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {Injectable} from '@angular/core';
 import {RecipesService} from './recipes.service';
-import {CreateRecipe, DeleteRecipe, GetAllRecipes} from "./recipe.action";
-import {first, tap} from "rxjs/operators";
+import {CreateRecipe, DeleteRecipe, GetAllRecipes} from './recipe.action';
+import {tap} from 'rxjs/operators';
 
 export class RecipesStateModel {
   recipes: Recipe[];
@@ -21,10 +21,11 @@ export class RecipesStateModel {
 @Injectable()
 export class RecipesState {
 
-  constructor(private recipesService: RecipesService) {}
+  constructor(private recipesService: RecipesService) {
+  }
 
   @Selector()
-  static recipes(state: RecipesStateModel){
+  static recipes(state: RecipesStateModel) {
     return state.recipes;
   }
 
@@ -35,7 +36,7 @@ export class RecipesState {
 
 
   @Action(GetAllRecipes)
-  getAllRecipes({getState, setState}: StateContext<RecipesStateModel>){
+  getAllRecipes({getState, setState}: StateContext<RecipesStateModel>) {
     const state = getState();
     return this.recipesService
       .getAllRecipes().pipe(
@@ -50,21 +51,21 @@ export class RecipesState {
 
 
   @Action(DeleteRecipe)
-  deleteRecipe({getState, setState, dispatch}: StateContext<RecipesStateModel>, action: DeleteRecipe){
+  deleteRecipe({getState, setState, dispatch}: StateContext<RecipesStateModel>, action: DeleteRecipe) {
     return this.recipesService.deleteRecipe(action.recipe);
   }
 
 
   @Action(CreateRecipe)
-  createRecipe({getState, setState, dispatch}: StateContext<RecipesStateModel>, action: CreateRecipe){
+  createRecipe({getState, setState, dispatch}: StateContext<RecipesStateModel>, action: CreateRecipe) {
     const state = getState();
     return this.recipesService.addRecipe(action.recipe).pipe(
-      tap( () => {
+      tap(() => {
         setState({
-          ...state,
-        }
+            ...state,
+          }
         );
-    })
+      })
     );
   }
 }

@@ -1,36 +1,42 @@
-<button mat-stroked-button (click)="goToHome()" >Return Home</button>
+<button mat-stroked-button (click)="goToHome()">Return Home</button>
 
 <div class="spacer">
-<app-add-recipe></app-add-recipe>
+  <app-add-recipe></app-add-recipe>
 
-<div>
+  <div>
 
-  <ul *ngFor=" let recipe of recipes$ | async">
-    <div class="mat-card">
-      <div *ngIf="!editState">
-    <div class="mat-card-title">
-      {{recipe.name}}
-    </div>
-      <mat-icon class="v-align-right" *ngIf="!editState" (click)="editItem($event, recipe)" style="flex: 1;">edit</mat-icon>
-      </div>
-      <div *ngIf="editState">
-        <mat-icon *ngIf="editState" (click)="clearState()" class="v-align-right">keyboard_arrow_up</mat-icon>
-        <div *ngIf="recipeToEdit.id === recipe.id">
+    <ul *ngFor=" let recipe of recipes$ | async">
+      <div class="mat-card">
+        <div *ngIf="!editState">
+          <div class="mat-card-title">
+            {{recipe.name}}
+          </div>
+          <mat-icon class="v-align-right" *ngIf="!editState" (click)="editItem($event, recipe)" style="flex: 1;">edit
+          </mat-icon>
+        </div>
+        <div *ngIf="editState">
+          <mat-icon *ngIf="editState" (click)="clearState()" class="v-align-right">keyboard_arrow_up</mat-icon>
+          <div *ngIf="recipeToEdit.id === recipe.id">
 
-          <form [formGroup]="updateRecipe" (ngSubmit)="submitHandler()">
-            <!--<label formControlName="id">{{recipe.id}}</label>
-            --><hr>
-            <label>Name</label><br>
-            <mat-form-field>
-              <input type="text" matInput placeholder="{{recipe.name}}" value="{{recipe.name}}" formControlName="name">
-            </mat-form-field><br>
-            <label>Estimated Time</label><br>
-            <mat-form-field>
-              <input type="number" matInput placeholder="{{recipe.estimatedTime}}" value="{{recipe.estimatedTime}}" formControlName="estimatedTime">
-            </mat-form-field><br>
-            <label>Ingredients</label>
+            <form [formGroup]="updateRecipe" (ngSubmit)="submitHandler()">
+              <!--<label formControlName="id">{{recipe.id}}</label>
+              -->
+              <hr>
+              <label>Name</label><br>
+              <mat-form-field>
+                <input type="text" matInput placeholder="{{recipe.name}}" value="{{recipe.name}}"
+                       formControlName="name">
+              </mat-form-field>
+              <br>
+              <label>Estimated Time</label><br>
+              <mat-form-field>
+                <input type="number" matInput placeholder="{{recipe.estimatedTime}}" value="{{recipe.estimatedTime}}"
+                       formControlName="estimatedTime">
+              </mat-form-field>
+              <br>
+              <label>Ingredients</label>
 
-            <div formArrayName="ingredients" *ngFor="let ing of ingredients.controls; let i = index ">
+              <div formArrayName="ingredients" *ngFor="let ing of ingredients.controls; let i = index ">
                 <div formGroupName="{{i}}">
 
                   <mat-form-field>
@@ -41,21 +47,21 @@
                     <input type="number" matInput placeholder="Amount In Grams" formControlName="amount">
                   </mat-form-field>
 
-                <button type="button" mat-raised-button color="warn" (click)="deleteIngredient(i)">Delete</button>
+                  <button type="button" mat-raised-button color="warn" (click)="deleteIngredient(i)">Delete</button>
 
+                </div>
               </div>
-              </div>
-            <button type="button" mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
-            <button type="button" mat-raised-button color="warn" (click)="deleteRecipe(recipe)">Delete Recipe</button>
-            <button type="submit" mat-raised-button color="accent">Update Recipe</button>
-          </form>
+              <button type="button" mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
+              <button type="button" mat-raised-button color="warn" (click)="deleteRecipe(recipe)">Delete Recipe</button>
+              <button type="submit" mat-raised-button color="accent">Update Recipe</button>
+            </form>
+          </div>
+
+
         </div>
-
-
       </div>
-    </div>
-  </ul>
+    </ul>
 
-</div>
+  </div>
 
 </div>

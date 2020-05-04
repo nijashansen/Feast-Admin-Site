@@ -1,14 +1,7 @@
 import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {Injectable} from '@angular/core';
 
-import {
-  CreateUser,
-  DeleteUser,
-  GetAllUsers,
-  GetNextSetOfUsers,
-  GetPriorSetOfUsers,
-  UpdateUser
-} from './user.action';
+import {CreateUser, DeleteUser, GetAllUsers, GetNextSetOfUsers, GetPriorSetOfUsers, UpdateUser} from './user.action';
 import {tap} from 'rxjs/operators';
 import {UserService} from './user.service';
 import {AuthUser} from './user';

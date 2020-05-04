@@ -1,22 +1,25 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {UserGuard} from "./guard/guard.guard";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {UserGuard} from './guard/guard.guard';
 
 
 const routes: Routes = [
   {
-  path: 'recipes',
-  loadChildren: () => import('./recipes/recipes.module').then(m => m.RecipesModule),
-  canActivateChild: [UserGuard]
+    path: 'recipes',
+    loadChildren: () => import('./recipes/recipes.module').then(m => m.RecipesModule),
+    canActivateChild: [UserGuard]
   },
-  { path: 'home',
+  {
+    path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
-  { path: 'users',
+  {
+    path: 'users',
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
     canActivateChild: [UserGuard]
   },
-  { path: 'userRecipes',
+  {
+    path: 'userRecipes',
     loadChildren: () => import('./user-recipes/user-recipes.module').then(m => m.UserRecipesModule)
   },
   {
@@ -24,7 +27,8 @@ const routes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full'
   },
-  { path: '',
+  {
+    path: '',
     redirectTo: '/home',
     pathMatch: 'full'
   }
@@ -34,4 +38,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

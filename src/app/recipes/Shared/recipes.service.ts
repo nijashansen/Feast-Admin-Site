@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {from, Observable} from 'rxjs';
 import {Recipe} from './recipe';
@@ -9,9 +9,10 @@ import {map} from 'rxjs/operators';
 })
 export class RecipesService {
 
-  constructor(private fs: AngularFirestore) { }
+  constructor(private fs: AngularFirestore) {
+  }
 
-getAllRecipes(): Observable<Recipe[]> {
+  getAllRecipes(): Observable<Recipe[]> {
     return this.fs.collection<Recipe>('Recipes').snapshotChanges().pipe(map(stuf => {
       const newArray: Recipe[] = [];
       stuf.forEach(doc => {
@@ -56,13 +57,13 @@ getAllRecipes(): Observable<Recipe[]> {
 
 
   updateRecipe(recipe: Recipe): Observable<Recipe> {
-    console.log(recipe.id)
+    console.log(recipe.id);
     debugger
-    return from( this.fs.doc(`Recipes/${recipe.id}`).update(recipe)).
-    pipe( map(() => {
-      console.log(recipe)
-      debugger
-      return recipe; }
+    return from(this.fs.doc(`Recipes/${recipe.id}`).update(recipe)).pipe(map(() => {
+        console.log(recipe);
+        debugger
+        return recipe;
+      }
     ));
 
   }

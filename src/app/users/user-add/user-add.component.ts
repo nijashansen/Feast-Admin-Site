@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {Store} from "@ngxs/store";
-import {CreateUser} from "../shared/user.action";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Store} from '@ngxs/store';
+import {CreateUser} from '../shared/user.action';
 
 @Component({
   selector: 'app-user-add',
@@ -11,7 +11,8 @@ import {CreateUser} from "../shared/user.action";
 export class UserAddComponent implements OnInit {
   createForm: FormGroup;
 
-  constructor(private store: Store, private fb: FormBuilder) { }
+  constructor(private store: Store, private fb: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.createForm = this.fb.group({
@@ -22,10 +23,10 @@ export class UserAddComponent implements OnInit {
   }
 
   signUpWithEmailPassword() {
-    const email = this.createForm.value.email
-    const password = this.createForm.value.password
-    const name = this.createForm.value.name
+    const email = this.createForm.value.email;
+    const password = this.createForm.value.password;
+    const name = this.createForm.value.name;
 
-    this.store.dispatch(new CreateUser(email, password, name))
+    this.store.dispatch(new CreateUser(email, password, name));
   }
 }

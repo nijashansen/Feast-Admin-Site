@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import {AngularFireAuth} from "@angular/fire/auth";
-import * as firebase from "firebase";
-import {AngularFirestore} from "@angular/fire/firestore";
-import {from, Observable} from "rxjs";
-import {AuthUser} from "../users/shared/user";
-import {map} from "rxjs/operators";
-import {User} from "firebase";
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from '@angular/fire/auth';
+import * as firebase from 'firebase';
+import {User} from 'firebase';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {from, Observable} from 'rxjs';
+import {AuthUser} from '../users/shared/user';
+import {map} from 'rxjs/operators';
 
 
 @Injectable({
@@ -13,9 +13,10 @@ import {User} from "firebase";
 })
 export class AuthenticationService {
 
-  authState = null
+  authState = null;
 
-  constructor(public afAuth: AngularFireAuth, private fs: AngularFirestore) { }
+  constructor(public afAuth: AngularFireAuth, private fs: AngularFirestore) {
+  }
 
   singInWithGoogle() {
     this.authState = this.afAuth.authState;
@@ -31,18 +32,18 @@ export class AuthenticationService {
     return from(this.afAuth.signOut());
   }
 
-  getUser(): Observable<AuthUser>{
+  getUser(): Observable<AuthUser> {
     const authUser$ = this.afAuth.authState
       .pipe(map(
         cred => this.firebaseUserToAuthUser(cred)
-        ));
+      ));
     return authUser$ as Observable<AuthUser>;
   }
 
   private firebaseUserToAuthUser(user: User): AuthUser {
     if (user) {
       return {
-       name : user.displayName,
+        name: user.displayName,
         uid: user.uid,
         email: user.email
       };
