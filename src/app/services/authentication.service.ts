@@ -25,8 +25,12 @@ export class AuthenticationService {
         if (user) {
           return this.fs.doc<AuthUser>(`Users/${user.uid}`)
             .valueChanges().pipe(map(value => {
-              value.uid = user.uid;
-              return value;
+              if (value) {
+                value.uid = user.uid;
+                return value;
+              } else {
+                return null
+              }
             }));
         } else {
           return of(null);

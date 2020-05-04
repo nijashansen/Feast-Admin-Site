@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {AuthUser} from './user';
 import {from, Observable, of} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {AuthenticationService} from '../../services/authentication.service';
 import {UserPage} from './UserPage';
+import {AngularFireAuth} from "@angular/fire/auth";
 
 
 @Injectable({
@@ -16,7 +17,7 @@ export class UserService {
   newArray: AuthUser[] = [];
 
 
-  constructor(private fs: AngularFirestore, private auth: AuthenticationService) {
+  constructor(private fs: AngularFirestore, private auth: AuthenticationService, private afAuth: AngularFireAuth) {
   }
 
 
@@ -127,10 +128,16 @@ export class UserService {
     }));
   }
 
-  createUserWithEmailAndPassword(email: string, password: string) {
-    return this.auth.createUserWithEmailAndPassword(
+  async createUserWithEmailAndPassword(email: string, password: string, user: AuthUser) {
+    const cred = await this.afAuth.createUserWithEmailAndPassword(
       email,
       password
     );
+
+    return this.fs.doc(`Users/${cred.user.uid}`).set({
+      email: cred.user.email,
+      name: user.name,
+      role: user.role,
+    })
   }
 }
