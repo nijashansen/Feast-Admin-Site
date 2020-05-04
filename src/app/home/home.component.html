@@ -1,9 +1,10 @@
 <div class="font">
   <h1>Front page</h1>
 
-  <div *ngIf="auth.authState | async as user; else showLogin">
-    <h3>Hello {{ user.displayName || user.name }}!</h3>
+  <div *ngIf="auth.authUser$ | async as user; else showLogin">
+    <h3>Hello {{ user.name }}!</h3>
     <p>Your User Id = {{user.uid}}</p>
+    <p>Your User Role = {{user.role}}</p>
     <button mat-stroked-button color="warn" (click)="logout()">Logout</button>
   </div>
   <ng-template #showLogin>
@@ -34,7 +35,7 @@
 
   </div>
 
-  <div *ngIf="auth.authState | async">
+  <div *ngIf="auth.authUser$ | async">
 
     <button mat-stroked-button (click)="goToRecipes()">Go To Recipes</button>
     <button mat-stroked-button (click)="goToUsers()">Go To Users</button>

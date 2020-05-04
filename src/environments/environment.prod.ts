@@ -11,3 +11,8 @@ export const environment = {
     measurementId: 'G-SR7V6CNQ7Q'
   }
 };
+
+export const roles = {
+  admin: 'Admin',
+  standard: 'Standard'
+};

@@ -17,6 +17,9 @@ export class HomeComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private router: Router,
               public auth: AuthenticationService,) {
+
+    auth.authUser$.subscribe( value => console.log(value) );
+
   }
 
   ngOnInit(): void {

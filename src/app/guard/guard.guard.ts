@@ -17,7 +17,7 @@ export class UserGuard implements CanActivate, CanActivateChild {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.authService.getUser().pipe(map(user => {
+    return this.authService.authUser$.pipe(map(user => {
       if (user === undefined) {
         this.router.navigate(['/']);
         return false;
@@ -29,7 +29,7 @@ export class UserGuard implements CanActivate, CanActivateChild {
 
   // tslint:disable-next-line:max-line-length
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.authService.getUser().pipe(map(user => {
+    return this.authService.authUser$.pipe(map(user => {
       if (user === undefined) {
         this.router.navigate(['/']);
         return false;

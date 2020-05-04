@@ -25,8 +25,7 @@ export class UserAddComponent implements OnInit {
   signUpWithEmailPassword() {
     const email = this.createForm.value.email;
     const password = this.createForm.value.password;
-    const name = this.createForm.value.name;
 
-    this.store.dispatch(new CreateUser(email, password, name));
+    this.store.dispatch(new CreateUser(email, password));
   }
 }

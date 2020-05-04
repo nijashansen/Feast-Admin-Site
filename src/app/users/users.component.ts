@@ -6,6 +6,8 @@ import {Select, Store} from '@ngxs/store';
 import {DeleteUser, GetAllUsers, GetNextSetOfUsers, GetPriorSetOfUsers, UpdateUser} from './shared/user.action';
 import {UserState} from './shared/user.state';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {roles} from "../../environments/environment";
 
 
 @Component({
@@ -24,20 +26,31 @@ export class UsersComponent implements OnInit {
   firstUser: string;
   lastItem: string;
   firstItem: string;
+  roles: string[];
 
   editState: boolean;
   userToEdit: AuthUser;
   page: number;
 
+  updateUserForm = new FormGroup({
+    uid: new FormControl(''),
+    name: new FormControl(''),
+    email: new FormControl(''),
+    role: new FormControl('')
+  });
 
-  constructor(private store: Store, private router: Router, public fs: AngularFirestore) {
+
+
+  constructor(private store: Store, private router: Router, public fs: AngularFirestore, private formBuilder: FormBuilder) {
     this.editState = false;
+
+    this.roles = [];
+
+    this.roles.push(roles.standard, roles.admin);
   }
 
   ngOnInit(): void {
     this.store.dispatch(new GetAllUsers());
-    // this.store.dispatch(new GetFirstUser());
-    // this.store.dispatch(new GetLastUser());
     this.lastVisible$.subscribe(value => {
       this.lastUser = value;
     });
@@ -50,11 +63,24 @@ export class UsersComponent implements OnInit {
     this.page$.subscribe(value => {
       console.log(value);
     });
+
+    this.updateUserForm = this.formBuilder.group({
+      uid: '',
+      name: '',
+      email: '',
+      role: ''
+    });
   }
 
-  editUser(event, user) {
+  editUser(event, user: AuthUser) {
     this.editState = true;
     this.userToEdit = user;
+
+    this.updateUserForm.patchValue({uid: user.uid});
+    this.updateUserForm.patchValue({name: user.name});
+    this.updateUserForm.patchValue({email: user.email});
+    this.updateUserForm.patchValue({role: user.role});
+
   }
 
   clearState() {
@@ -62,8 +88,15 @@ export class UsersComponent implements OnInit {
     this.userToEdit = null;
   }
 
-  updateUser(user: AuthUser) {
-    this.store.dispatch(new UpdateUser(user));
+  updateUser() {
+    const info = {
+      uid: this.updateUserForm.value.uid,
+      name: this.updateUserForm.value.name,
+      email: this.updateUserForm.value.email,
+      role: this.updateUserForm.value.role
+    } as AuthUser;
+
+    this.store.dispatch(new UpdateUser(info));
     this.clearState();
   }
 
