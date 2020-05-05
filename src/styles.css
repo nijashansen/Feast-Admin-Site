@@ -13,3 +13,14 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.fail{
+  background-color: red;
+  color: white;
+}
+
+.success{
+  background-color: greenyellow;
+  color: black;
+
+}

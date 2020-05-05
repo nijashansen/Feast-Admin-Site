@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../services/authentication.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {SankBarComponent, fail} from './snak-bar/sank-bar.component';
 
 @Component({
   selector: 'app-home',
@@ -10,13 +12,14 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
 
-  public loginWithEmail: boolean = false;
+  public loginWithEmail = false;
 
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              public auth: AuthenticationService,) {
+              public auth: AuthenticationService,
+              private snackBar: MatSnackBar) {
 
     auth.authUser$.subscribe( value => console.log(value) );
 
@@ -65,14 +68,20 @@ export class HomeComponent implements OnInit {
   signUpWithEmailPassword() {
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
+    this.auth.createUserWithEmailAndPassword(email, password).
+    then(() => this.snackBar.open('success', '', {duration: 600, panelClass: ['success']})).
+    catch(reason => { this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
 
-    this.auth.createUserWithEmailAndPassword(email, password);
+   });
   }
 
+
+
   loginWithEmailMethod() {
-    if (this.loginWithEmail == true) {
+    if (this.loginWithEmail === true) {
       this.loginWithEmail = false;
-    } else if (this.loginWithEmail == false) {
+    }
+    else if (this.loginWithEmail === false) {
       this.loginWithEmail = true;
     }
   }

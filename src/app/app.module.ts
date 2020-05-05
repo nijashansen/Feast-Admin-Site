@@ -19,14 +19,19 @@ import {RecipesState} from './recipes/Shared/recipes.state';
 import {UserState} from './users/shared/user.state';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {MatIconModule} from '@angular/material/icon';
+import {RoleGuard} from './guard/role-guard';
+import { SankBarComponent } from './home/snak-bar/sank-bar.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
+    SankBarComponent,
   ],
   imports: [
+    MatSnackBarModule,
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
@@ -40,8 +45,10 @@ import {MatIconModule} from '@angular/material/icon';
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
     MatIconModule,
+
   ],
-  providers: [UserGuard],
+  entryComponents: [SankBarComponent],
+  providers: [UserGuard, RoleGuard],
   bootstrap: [AppComponent]
 
 })

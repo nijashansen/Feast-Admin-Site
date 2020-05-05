@@ -51,11 +51,20 @@ export class AuthenticationService {
     let data: AuthUser
 
     if (userCred.additionalUserInfo.isNewUser) {
-      data = {
-        email: userCred.user.email,
-        name: userCred.user.displayName,
-        role: roles.standard
-      };
+      if (userCred.user.displayName) {
+        data = {
+          email: userCred.user.email,
+          name: userCred.user.displayName,
+          role: roles.standard
+        };
+      }
+      else
+        {
+          data = {
+            email: userCred.user.email,
+            role: roles.standard
+          };
+        }
     } else {
       data = {
         email: userCred.user.email,
