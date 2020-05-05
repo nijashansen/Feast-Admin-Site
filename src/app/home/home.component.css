@@ -1,4 +1,19 @@
-.font {
-  font-family: "Franklin Gothic Medium";
-  font-weight: bold;
+.header {
+  text-align: center;
 }
+
+.loginContainer {
+  text-align: center;
+  align-content: center;
+}
+
+.LoggedInContainer {
+  text-align: center;
+  align-content: center;
+}
+
+.wrapper {
+  text-align: center;
+  align-content: center;
+}
+

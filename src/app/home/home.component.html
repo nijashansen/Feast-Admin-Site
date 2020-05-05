@@ -1,19 +1,21 @@
-<div class="font">
+<div class="header">
   <h1>Front page</h1>
 
-  <div *ngIf="auth.authUser$ | async as user; else showLogin">
+
+  <div class="LoggedInContainer" *ngIf="auth.authUser$ | async as user; else showLogin">
     <h3>Hello {{ user.name }}!</h3>
     <p>Your User Id = {{user.uid}}</p>
     <p>Your User Role = {{user.role}}</p>
     <button mat-stroked-button color="warn" (click)="logout()">Logout</button>
   </div>
-  <ng-template #showLogin>
+  <ng-template #showLogin class="LoggedInContainer">
     <p>Please login.</p>
-    <button mat-stroked-button (click)="loginWithGoogle()">Login with Google</button>
-    <button mat-stroked-button (click)="loginWithEmailMethod()">Login with Email and Password</button>
+      <button mat-stroked-button (click)="loginWithGoogle()">Login with Google</button>
+      <button *ngIf="loginWithEmail == false" mat-stroked-button (click)="loginWithEmailMethod()">Login with Email and Password</button>
   </ng-template>
 
-  <div *ngIf="loginWithEmail == true">
+
+  <div class="loginContainer" *ngIf="loginWithEmail == true">
     <form [formGroup]="loginForm">
 
       <mat-form-field>
@@ -30,6 +32,7 @@
 
       <button mat-stroked-button (click)="loginWithEmailPassword()" routerLink="/home">Login</button>
       <button mat-stroked-button (click)="signUpWithEmailPassword()" routerLink="/home">sign up</button>
+      <button mat-stroked-button (click)="loginWithEmailMethod()" routerLink="/home">Cancel</button>
 
     </form>
 
@@ -43,8 +46,8 @@
 
   </div>
 
-</div>
 
+</div>
 
 
 
