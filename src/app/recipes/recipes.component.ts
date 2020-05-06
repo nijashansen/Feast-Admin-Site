@@ -7,6 +7,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Select, Store} from '@ngxs/store';
 import {GetAllRecipes} from './Shared/recipe.action';
 import {RecipesState} from './Shared/recipes.state';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -33,7 +34,8 @@ export class RecipesComponent implements OnInit {
   constructor(private recipesService: RecipesService,
               private router: Router,
               private formBuilder: FormBuilder,
-              private store: Store) {
+              private store: Store,
+              private snackBar: MatSnackBar) {
   }
 
   get ingredients() {
@@ -93,7 +95,13 @@ export class RecipesComponent implements OnInit {
       ingredients: this.updateRecipe.value.ingredients
     } as Recipe;
     console.log(info);
-    this.recipesService.updateRecipe(info);
+    this.recipesService.updateRecipe(info)
+      .then(() => this.snackBar.open
+      ('Recipe Was Updated', '', {duration: 600, panelClass: ['success']}))
+      .catch(reason => {
+        this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
+
+      });
     this.clearState();
   }
 
@@ -103,7 +111,12 @@ export class RecipesComponent implements OnInit {
 
 
   deleteRecipe(recipe: Recipe) {
-    this.recipesService.deleteRecipe(recipe);
+    this.recipesService.deleteRecipe(recipe).then(() => this.snackBar.open
+    ('success', '', {duration: 600, panelClass: ['success']}))
+      .catch(reason => {
+        this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
+
+      });
     this.editState = false;
   }
 

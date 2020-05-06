@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Recipe} from '../Shared/recipe';
 import {RecipesService} from '../Shared/recipes.service';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-recipe',
@@ -21,7 +22,7 @@ export class AddRecipeComponent implements OnInit {
   loading = false;
   success = false;
 
-  constructor(private recipesService: RecipesService, private formBuilder: FormBuilder) {
+  constructor(private recipesService: RecipesService, private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -60,10 +61,12 @@ export class AddRecipeComponent implements OnInit {
       this.recipesService.addRecipe(this.recipe);
 
     } catch (err) {
+      this.snackBar.open(err, 'ok', {duration: 7000, panelClass: ['fail']})
       console.error(err);
     }
+    this.snackBar.open(this.recipe.name + 'Was Added', '', {duration: 600, panelClass: ['success']});
 
-    this.loading = false;
+    this.recipe = null;
+
   }
-
 }

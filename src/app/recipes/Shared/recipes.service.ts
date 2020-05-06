@@ -43,29 +43,13 @@ export class RecipesService {
   }
 
 
-  deleteRecipe(recipe: Recipe): Observable<Recipe> {
-    return from(
-      this.fs
-        .doc(`Recipes/${recipe.id}`)
-        .delete()
-    ).pipe(
-      map(() => {
-        return recipe;
-      })
-    );
+  deleteRecipe(recipe: Recipe): Promise<void> {
+    return this.fs.doc(`Recipes/${recipe.id}`).delete();
   }
 
 
-  updateRecipe(recipe: Recipe): Observable<Recipe> {
-    console.log(recipe.id);
-    debugger
-    return from(this.fs.doc(`Recipes/${recipe.id}`).update(recipe)).pipe(map(() => {
-        console.log(recipe);
-        debugger
-        return recipe;
-      }
-    ));
-
+  updateRecipe(recipe: Recipe): Promise<void> {
+     return this.fs.doc(`Recipes/${recipe.id}`).update(recipe);
   }
 
 
