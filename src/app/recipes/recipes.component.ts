@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Recipe} from './Shared/recipe';
-import {RecipesService} from './Shared/recipes.service';
 import {Router} from '@angular/router';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Select, Store} from '@ngxs/store';
-import {GetAllRecipes} from './Shared/recipe.action';
+import {DeleteRecipe, GetAllRecipes, UpdateRecipe} from './Shared/recipe.action';
 import {RecipesState} from './Shared/recipes.state';
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -31,8 +30,7 @@ export class RecipesComponent implements OnInit {
   editState = false;
   recipeToEdit: Recipe;
 
-  constructor(private recipesService: RecipesService,
-              private router: Router,
+  constructor(private router: Router,
               private formBuilder: FormBuilder,
               private store: Store,
               private snackBar: MatSnackBar) {
@@ -95,7 +93,7 @@ export class RecipesComponent implements OnInit {
       ingredients: this.updateRecipe.value.ingredients
     } as Recipe;
     console.log(info);
-    this.recipesService.updateRecipe(info)
+    this.store.dispatch(new UpdateRecipe(info)).toPromise()
       .then(() => this.snackBar.open
       ('Recipe Was Updated', '', {duration: 600, panelClass: ['success']}))
       .catch(reason => {
@@ -111,7 +109,7 @@ export class RecipesComponent implements OnInit {
 
 
   deleteRecipe(recipe: Recipe) {
-    this.recipesService.deleteRecipe(recipe).then(() => this.snackBar.open
+    this.store.dispatch(new DeleteRecipe(recipe)).toPromise().then(() => this.snackBar.open
     ('success', '', {duration: 600, panelClass: ['success']}))
       .catch(reason => {
         this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});

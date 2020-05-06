@@ -2,7 +2,7 @@ import {Recipe} from './recipe';
 import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {Injectable} from '@angular/core';
 import {RecipesService} from './recipes.service';
-import {CreateRecipe, DeleteRecipe, GetAllRecipes} from './recipe.action';
+import {CreateRecipe, DeleteRecipe, GetAllRecipes, UpdateRecipe} from './recipe.action';
 import {tap} from 'rxjs/operators';
 
 export class RecipesStateModel {
@@ -67,6 +67,11 @@ export class RecipesState {
         );
       })
     );
+  }
+
+  @Action(UpdateRecipe)
+  updateRecipe({getState, setState, dispatch}: StateContext<UpdateRecipe>, action: UpdateRecipe){
+    return this.recipesService.updateRecipe(action.recipe);
   }
 }
 
