@@ -1,13 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {UserGuard} from './guard/guard.guard';
+import {RoleGuard} from './guard/role-guard';
 
 
 const routes: Routes = [
   {
     path: 'recipes',
     loadChildren: () => import('./recipes/recipes.module').then(m => m.RecipesModule),
-    canActivateChild: [UserGuard]
+    canActivateChild: [UserGuard],
+
   },
   {
     path: 'home',
@@ -16,7 +18,8 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
-    canActivateChild: [UserGuard]
+    canActivateChild: [UserGuard],
+    //canLoad: [RoleGuard]
   },
   {
     path: 'userRecipes/:uid',
