@@ -28,7 +28,7 @@
 
   <br>
 
-  <button mat-stroked-button (click)="signUpWithEmailPassword()" routerLink="/users">Sign up</button>
-  <button mat-stroked-button routerLink="/users">Cancel</button>
+  <button mat-stroked-button (click)="signUpWithEmailPassword()">Sign up</button>
+  <button mat-stroked-button (click)="router.navigate(['/users'])">Cancel</button>
 
 </form>

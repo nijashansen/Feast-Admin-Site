@@ -4,6 +4,8 @@ import {Store} from '@ngxs/store';
 import {CreateUser} from '../shared/user.action';
 import {roles} from '../../../environments/environment';
 import {AuthUser} from '../shared/user';
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-add',
@@ -15,7 +17,7 @@ export class UserAddComponent implements OnInit {
 
   roles: string[];
 
-  constructor(private store: Store, private fb: FormBuilder) {
+  constructor(private store: Store, private fb: FormBuilder, private snackBar: MatSnackBar, public router: Router) {
 
     this.roles = [];
 
@@ -40,6 +42,13 @@ export class UserAddComponent implements OnInit {
       role: this.createForm.value.role
     } as AuthUser;
 
-    this.store.dispatch(new CreateUser(email, password, info));
+
+    this.store.dispatch(new CreateUser(email, password, info)).toPromise()
+      .then(() => {
+        this.snackBar.open('success', '', {duration: 6000, panelClass: ['success']})
+        this.router.navigate(['/users']);
+      })
+      .catch(e =>
+        this.snackBar.open(e, 'ok', {duration: 6000, panelClass: ['fail']}));
   }
 }
