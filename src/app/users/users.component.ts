@@ -8,6 +8,7 @@ import {UserState} from './shared/user.state';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {roles} from '../../environments/environment';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -40,7 +41,11 @@ export class UsersComponent implements OnInit {
   });
 
 
-  constructor(private store: Store, private router: Router, public fs: AngularFirestore, private formBuilder: FormBuilder) {
+  constructor(private store: Store,
+              public router: Router,
+              public fs: AngularFirestore,
+              private formBuilder: FormBuilder,
+              private snackBar: MatSnackBar) {
     this.editState = false;
 
     this.roles = [];
@@ -95,13 +100,25 @@ export class UsersComponent implements OnInit {
       role: this.updateUserForm.value.role
     } as AuthUser;
 
-    this.store.dispatch(new UpdateUser(info));
+    this.store.dispatch(new UpdateUser(info)).toPromise()
+      .then(() => {
+        this.snackBar.open('success', '', {duration: 6000, panelClass: ['success']})
+        this.router.navigate(['/users']);
+      })
+      .catch(e =>
+        this.snackBar.open(e, 'ok', {duration: 6000, panelClass: ['fail']}));
     this.clearState();
   }
 
   deleteItem($event: MouseEvent, user: AuthUser) {
     this.clearState();
-    this.store.dispatch(new DeleteUser(user));
+    this.store.dispatch(new DeleteUser(user)).toPromise()
+      .then(() => {
+        this.snackBar.open('success', '', {duration: 6000, panelClass: ['success']})
+        this.router.navigate(['/users']);
+      })
+      .catch(e =>
+        this.snackBar.open(e, 'ok', {duration: 6000, panelClass: ['fail']}));
   }
 
   goToUserAdd() {
