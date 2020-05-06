@@ -1,6 +1,6 @@
 <nav aria-label="Top Toolbar" class="navbar mat-elevation-z6">
   <mat-icon>
-    <i class="material-icons">accessible</i>
+    <i class="material-icons" (click)="router.navigate(['/home'])" >accessible</i>
   </mat-icon>
   <div class="flex-spacer"></div>
   <a (click)="this.router.navigate(['/recipes'])" *ngIf="auth.authUser$ | async" aria-disabled="false"
