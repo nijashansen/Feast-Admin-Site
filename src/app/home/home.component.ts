@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../services/authentication.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {SankBarComponent, fail} from './snak-bar/sank-bar.component';
+
 
 @Component({
   selector: 'app-home',
@@ -45,7 +45,11 @@ export class HomeComponent implements OnInit {
   }
 
   loginWithGoogle() {
-    this.auth.singInWithGoogle();
+    this.auth.singInWithGoogle().
+    then(() => this.snackBar.open('success', '', {duration: 600, panelClass: ['success']})).
+    catch(reason => { this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
+
+    });
   }
 
   logout() {
@@ -57,12 +61,15 @@ export class HomeComponent implements OnInit {
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
 
-    try {
-      this.auth.signInWithEmailPassword(email, password);
-      this.loginWithEmail = false;
-    } catch (e) {
-      console.log(e);
-    }
+
+    this.auth.signInWithEmailPassword(email, password)
+      .then(() =>
+        this.snackBar.open('success', '', {duration: 600, panelClass: ['success']})).
+           catch(reason => {
+                this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
+
+  });
+    this.loginWithEmail = false;
   }
 
   signUpWithEmailPassword() {
