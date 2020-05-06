@@ -10,8 +10,10 @@
   </div>
   <ng-template #showLogin class="LoggedInContainer">
     <p>Please login.</p>
-      <button mat-stroked-button (click)="loginWithGoogle()">Login with Google</button>
-      <button *ngIf="loginWithEmail == false" mat-stroked-button (click)="loginWithEmailMethod()">Login with Email and Password</button>
+    <button mat-stroked-button (click)="loginWithGoogle()">Login with Google</button>
+    <button *ngIf="loginWithEmail == false" mat-stroked-button (click)="loginWithEmailMethod()">Login with Email and
+      Password
+    </button>
   </ng-template>
 
 

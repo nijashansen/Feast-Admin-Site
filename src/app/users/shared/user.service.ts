@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {AuthUser} from './user';
 import {from, Observable, of} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {AuthenticationService} from '../../services/authentication.service';
 import {UserPage} from './UserPage';
-import {AngularFireAuth} from "@angular/fire/auth";
+import {AngularFireAuth} from '@angular/fire/auth';
 
 
 @Injectable({
@@ -138,6 +138,6 @@ export class UserService {
       email: cred.user.email,
       name: user.name,
       role: user.role,
-    })
+    });
   }
 }

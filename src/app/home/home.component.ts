@@ -10,15 +10,15 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
 
-  public loginWithEmail: boolean = false;
+  public loginWithEmail: boolean;
 
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder,
               private router: Router,
               public auth: AuthenticationService,) {
-
-    auth.authUser$.subscribe( value => console.log(value) );
+    this.loginWithEmail = false;
+    auth.authUser$.subscribe(value => console.log(value));
 
   }
 
@@ -70,10 +70,6 @@ export class HomeComponent implements OnInit {
   }
 
   loginWithEmailMethod() {
-    if (this.loginWithEmail == true) {
-      this.loginWithEmail = false;
-    } else if (this.loginWithEmail == false) {
-      this.loginWithEmail = true;
-    }
+    this.loginWithEmail = !this.loginWithEmail;
   }
 }

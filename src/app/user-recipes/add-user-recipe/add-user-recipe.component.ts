@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {UserRecipeService} from '../Shared/user-recipe.service';
-import {UserRecipe} from '../Shared/userRecipe';
-import {UserRecipesComponent} from '../user-recipes.component';
+import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-user-recipe',
@@ -11,38 +10,37 @@ import {UserRecipesComponent} from '../user-recipes.component';
 })
 export class AddUserRecipeComponent implements OnInit {
 
-  form: FormGroup;
-  recipe: UserRecipe = {
-    ingredients: [],
-    estimatedTime: 0,
-    name: '',
-    userId: this.userRecipe.getUserId().toString()
-  };
+  @Input() ownerID: string;
 
-  constructor(private formBuilder: FormBuilder, private userRecipeService: UserRecipeService, private userRecipe: UserRecipesComponent) { }
+  newRecipe = new FormGroup({
+    id: new FormControl(''),
+    name: new FormControl(''),
+    estimatedTime: new FormControl(''),
+    ingredients: new FormArray([]),
+  });
 
-  ngOnInit(): void {
-
-    this.form = this.formBuilder.group({
-      name: '',
-      estimatedTime: 0,
-      userId: this.userRecipe.getUserId(),
-      ingredients: this.formBuilder.array([])
-
-    });
+  constructor(private formBuilder: FormBuilder, private userRecipeService: UserRecipeService) {
   }
 
   get ingredients() {
-    return this.form.get('ingredients') as FormArray;
+    return this.newRecipe.get('ingredients') as FormArray;
   }
 
- addIngredient() {
+  ngOnInit(): void {
+    this.newRecipe = this.formBuilder.group({
+      name: '',
+      estimatedTime: 0,
+      userId: this.ownerID,
+      ingredients: this.formBuilder.array([])
+    });
+  }
+
+  addIngredient() {
     const ingredient = this.formBuilder.group({
       name: '',
       amount: 0
     });
     this.ingredients.push(ingredient);
-
   }
 
   deleteIngredient(i) {
@@ -51,15 +49,11 @@ export class AddUserRecipeComponent implements OnInit {
 
 
   async submitHandler() {
-    this.recipe = this.form.value;
-
-    try {
-      this.userRecipeService.addUserRecipe(this.recipe);
-
-
-    } catch (err) {
-      console.error(err);
-    }
+    const rs = this.newRecipe.value;
+    // @ts-ignore
+    this.userRecipeService.addUserRecipe(rs).pipe(catchError(err => {
+      console.log(err);
+    }));
 
   }
 }

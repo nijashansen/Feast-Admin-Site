@@ -48,8 +48,6 @@ export class RecipesComponent implements OnInit {
       id: '',
       name: '',
       estimatedTime: 0,
-      ingName: '',
-      ingAmount: 0,
       ingredients: this.formBuilder.array([])
     });
   }
@@ -71,11 +69,6 @@ export class RecipesComponent implements OnInit {
       formArray.push(ingredient);
     }
     this.updateRecipe.setControl('ingredients', formArray);
-
-    // this.ingredients.clear();
-    // this.ingredients.
-    // this.updateRecipe.patchValue({ingredients: recipe.ingredients});
-    console.log(this.updateRecipe);
   }
 
   clearState() {
