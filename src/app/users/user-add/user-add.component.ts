@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Store} from '@ngxs/store';
 import {CreateUser} from '../shared/user.action';
-import {roles} from "../../../environments/environment";
-import {AuthUser} from "../shared/user";
+import {roles} from '../../../environments/environment';
+import {AuthUser} from '../shared/user';
 
 @Component({
   selector: 'app-user-add',

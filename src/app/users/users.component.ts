@@ -6,8 +6,8 @@ import {Select, Store} from '@ngxs/store';
 import {DeleteUser, GetAllUsers, GetNextSetOfUsers, GetPriorSetOfUsers, UpdateUser} from './shared/user.action';
 import {UserState} from './shared/user.state';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {roles} from "../../environments/environment";
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {roles} from '../../environments/environment';
 
 
 @Component({
@@ -38,7 +38,6 @@ export class UsersComponent implements OnInit {
     email: new FormControl(''),
     role: new FormControl('')
   });
-
 
 
   constructor(private store: Store, private router: Router, public fs: AngularFirestore, private formBuilder: FormBuilder) {
@@ -131,6 +130,6 @@ export class UsersComponent implements OnInit {
 
 
   onSelect(uid: string) {
-  this.router.navigate(['/userRecipes', uid]);
+    this.router.navigate(['/userRecipes', uid]);
   }
 }

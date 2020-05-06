@@ -12,7 +12,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class HomeComponent implements OnInit {
 
-  public loginWithEmail = false;
+  public loginWithEmail: boolean;
 
   loginForm: FormGroup;
 
@@ -20,8 +20,8 @@ export class HomeComponent implements OnInit {
               private router: Router,
               public auth: AuthenticationService,
               private snackBar: MatSnackBar) {
-
-    auth.authUser$.subscribe( value => console.log(value) );
+    this.loginWithEmail = false;
+    auth.authUser$.subscribe(value => console.log(value));
 
   }
 
@@ -81,11 +81,6 @@ export class HomeComponent implements OnInit {
 
 
   loginWithEmailMethod() {
-    if (this.loginWithEmail === true) {
-      this.loginWithEmail = false;
-    }
-    else if (this.loginWithEmail === false) {
-      this.loginWithEmail = true;
-    }
+    this.loginWithEmail = !this.loginWithEmail;
   }
 }

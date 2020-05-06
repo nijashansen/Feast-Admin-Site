@@ -11,7 +11,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {UserAddComponent} from './user-add/user-add.component';
 import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from "@angular/material/select";
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({

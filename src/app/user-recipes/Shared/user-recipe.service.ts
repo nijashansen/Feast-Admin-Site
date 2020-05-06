@@ -1,74 +1,68 @@
-import { Injectable } from '@angular/core';
-import {AngularFirestore} from "@angular/fire/firestore";
-import {UserRecipe} from "./userRecipe";
-import {from, Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {Injectable} from '@angular/core';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {UserRecipe} from './userRecipe';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+
+const ServicePart = 'UserRecipe';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserRecipeService {
 
-  constructor(private fs: AngularFirestore) { }
-
-  getRecipeById(recipe: Map<string, string>): Observable<UserRecipe>{
-    return this.fs.collection<UserRecipe>('UserRecipe').doc<UserRecipe>(`${recipe.keys()}`).snapshotChanges().pipe(map(changes => {
-        const info = changes.payload.data as unknown as UserRecipe;
-        const fId = changes.payload.id;
-        info.id = fId;
-        return info;
-
-      }
-    ));
+  constructor(private fs: AngularFirestore) {
   }
 
+  getRecipeById(urID: string): Observable<UserRecipe> {
+    return this.fs.collection<UserRecipe>(ServicePart).doc<UserRecipe>(urID).valueChanges().pipe(map(response => {
+        console.log(2, response);
+        const info = response as UserRecipe;
+        info.id = urID;
+        return info;
+      }
+    ));
+  } // tjek
 
-  getAllRecipesForUser(userId: string): Observable<UserRecipe[]>{
-    // tslint:disable-next-line:max-line-length
-    return this.fs.collection<UserRecipe>('UserRecipe', sel => sel.where('uid', '==', `UserRecipes/${userId}`)).snapshotChanges().pipe(map (doStuf => {
+  getAllUserRecipes(): Observable<UserRecipe[]> {
+    return this.fs.collection<UserRecipe>(ServicePart).snapshotChanges().pipe(map(response => {
       const newArray: UserRecipe[] = [];
-      doStuf.forEach(doc => {
-        const recipe = doc.payload.doc.data();
-        const fbId = doc.payload.doc.id;
-        newArray.push({
-          id: fbId,
-          name: recipe.name,
-          ingredients: recipe.ingredients,
-          estimatedTime: recipe.estimatedTime,
-          userId: recipe.userId
-        });
+      response.forEach(doc => {
+        const ur = doc.payload.doc.data() as UserRecipe;
+        ur.id = doc.payload.doc.id;
+        newArray.push(ur);
       });
       return newArray;
     }));
   }
 
-
-  addUserRecipe(recipe: UserRecipe): Observable<UserRecipe>{
-    return from(this.fs.collection('UserRecipe')
-      .add(recipe)).pipe(map(() => {
-      return recipe;
-    }));
+  getAllRecipesForUser(userId: string): Observable<UserRecipe[]> {
+    return this.fs.collection<UserRecipe>(ServicePart, ref => ref.where('userId', '==', userId))
+      .snapshotChanges()
+      .pipe(map(response => {
+        const newArray: UserRecipe[] = [];
+        response.forEach(doc => {
+          const ur = doc.payload.doc.data() as UserRecipe;
+          ur.id = doc.payload.doc.id;
+          newArray.push(ur);
+        });
+        return newArray;
+      }));
   }
 
 
-  deleteUserRecipe(recipe: UserRecipe): Observable<UserRecipe>{
-    return from(
-      this.fs
-        .doc(`UserRecipes/${recipe.id}`)
-        .delete()
-    ).pipe(
-      map(() => {
-        return recipe;
-      })
-    );
+  addUserRecipe(recipe: UserRecipe): Promise<any> {
+    return this.fs.collection(ServicePart).add(recipe);
   }
 
 
-  updateUserRecipe(recipe: UserRecipe): Observable<UserRecipe>{
-    return from(this.fs.doc(`UserRecipes/${recipe.id}`).update(recipe)).pipe(map(() => {
-        return recipe;
-      }
-    ));
+  deleteUserRecipe(urId: string): Promise<void> {
+    return this.fs.doc(`${ServicePart}/${urId}`).delete();
+  }
+
+
+  updateUserRecipe(recipe: UserRecipe): Promise<void> {
+    return this.fs.doc(`${ServicePart}/${recipe.id}`).update(recipe);
   }
 
 }

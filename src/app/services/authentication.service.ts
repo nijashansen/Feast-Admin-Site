@@ -1,21 +1,18 @@
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
-import * as firebase from 'firebase';
-import {auth, User} from 'firebase';
+import {auth} from 'firebase';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {from, Observable, of} from 'rxjs';
 import {AuthUser} from '../users/shared/user';
 import {map, switchMap} from 'rxjs/operators';
+import {roles} from '../../environments/environment';
 import UserCredential = firebase.auth.UserCredential;
-import {roles} from "../../environments/environment";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  authState = null;
   public authUser$: Observable<AuthUser>;
 
   constructor(public afAuth: AngularFireAuth, private fs: AngularFirestore) {
@@ -29,7 +26,7 @@ export class AuthenticationService {
                 value.uid = user.uid;
                 return value;
               } else {
-                return null
+                return null;
               }
             }));
         } else {
@@ -42,13 +39,13 @@ export class AuthenticationService {
 
   async singInWithGoogle() {
     const provider = new auth.GoogleAuthProvider();
-    const cred = await this.afAuth.signInWithPopup(provider)
+    const cred = await this.afAuth.signInWithPopup(provider);
     return this.updateUserInfo(cred);
   }
 
   updateUserInfo(userCred: UserCredential) {
     const userRef: AngularFirestoreDocument<AuthUser> = this.fs.doc(`Users/${userCred.user.uid}`);
-    let data: AuthUser
+    let data: AuthUser;
 
     if (userCred.additionalUserInfo.isNewUser) {
       if (userCred.user.displayName) {
