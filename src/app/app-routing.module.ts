@@ -19,7 +19,7 @@ const routes: Routes = [
     path: 'users',
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
     canActivateChild: [UserGuard],
-    //canLoad: [RoleGuard]
+    canLoad: [RoleGuard]
   },
   {
     path: 'userRecipes/:uid',

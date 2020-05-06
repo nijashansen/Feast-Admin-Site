@@ -20,7 +20,6 @@ import {UserState} from './users/shared/user.state';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {MatIconModule} from '@angular/material/icon';
 import {RoleGuard} from './guard/role-guard';
-import { SankBarComponent } from './home/snak-bar/sank-bar.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
@@ -28,7 +27,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
   declarations: [
     AppComponent,
     NavBarComponent,
-    SankBarComponent,
+
   ],
   imports: [
     MatSnackBarModule,
@@ -47,7 +46,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatIconModule,
 
   ],
-  entryComponents: [SankBarComponent],
+
   providers: [UserGuard, RoleGuard],
   bootstrap: [AppComponent]
 

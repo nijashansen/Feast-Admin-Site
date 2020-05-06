@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../services/authentication.service';
 import {Observable} from 'rxjs';
@@ -13,7 +13,8 @@ import {AuthUser} from '../users/shared/user';
 export class NavBarComponent implements OnInit {
   authState: AuthUser;
 
-  constructor(public auth: AuthenticationService, public router: Router) { }
+  constructor(public auth: AuthenticationService, public router: Router) {
+  }
 
   ngOnInit(): void {
     this.auth.authUser$.subscribe(value => {
