@@ -45,7 +45,11 @@ export class HomeComponent implements OnInit {
   }
 
   loginWithGoogle() {
-    this.auth.singInWithGoogle();
+    this.auth.singInWithGoogle().
+    then(() => this.snackBar.open('success', '', {duration: 600, panelClass: ['success']})).
+    catch(reason => { this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
+
+    });
   }
 
   logout() {
