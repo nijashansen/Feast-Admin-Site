@@ -1,8 +1,8 @@
 <nav aria-label="Top Toolbar" class="navbar mat-elevation-z6">
-  <a (click)="this.router.navigate(['/users'])" *ngIf="auth.authUser$ | async" aria-disabled="false"
+  <a (click)="this.router.navigate(['/home'])" *ngIf="auth.authUser$ | async" aria-disabled="false"
      class="mat-button mat-button-base" tabindex="0">
     <span class="mat-button-wrapper">
-      <i class="material-icons" (click)="router.navigate(['/home'])">accessible</i>
+      <i class="material-icons">accessible</i>
     </span>
     <div class="mat-ripple" matripple="mat-button-ripple"></div>
     <div class="mat-button-focus-overlay"></div>

@@ -1,56 +1,64 @@
-<button mat-stroked-button (click)="goToHome()">Return Home</button>
+<mat-card>
+  <mat-card-header>
+    <label class="mat-card-title">Users</label>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <div *ngFor="let user of (users$ | async)">
+      <ul>
+        <li> Name: {{user.name}} </li>
+        <li> Email: {{user.email}} </li>
+        <li> ID: {{user.uid}}</li>
+        <li> Role: {{user.role}}</li>
 
-<div *ngFor="let user of (users$ | async)">
-  <ul>
-    <li> Name: {{user.name}} </li>
-    <li> Email: {{user.email}} </li>
-    <li> ID: {{user.uid}}</li>
-    <li> Role: {{user.role}}</li>
+        <button (click)="editUser($event, user)" *ngIf="!editState" color="primary" mat-stroked-button>Update User
+        </button>
+        <button (click)="onSelect(user.uid)" color="accent" mat-stroked-button>Go To Users Recipes</button>
 
-    <button color="primary" mat-stroked-button *ngIf="!editState" (click)="editUser($event, user)">Update User</button>
-    <button mat-stroked-button color="accent" (click)="onSelect(user.uid)">Go To Users Recipes</button>
+        <div *ngIf="editState && userToEdit.uid == user.uid">
+          <form (ngSubmit)="updateUser()" [formGroup]="updateUserForm">
 
-    <div *ngIf="editState && userToEdit.uid == user.uid">
-      <form [formGroup]="updateUserForm" (ngSubmit)="updateUser()">
+            <mat-form-field>
+              <input formControlName="name" matInput name="Name" placeholder="name" type="text">
+            </mat-form-field>
 
-        <mat-form-field>
-          <input matInput type="text" placeholder="name" formControlName="name" name="Name">
-        </mat-form-field>
+            <br>
 
-        <br>
+            <mat-form-field>
+              <input formControlName="email" matInput name="Email" placeholder="email" type="text">
+            </mat-form-field>
 
-        <mat-form-field>
-          <input matInput type="text" placeholder="email" formControlName="email" name="Email">
-        </mat-form-field>
+            <br>
 
-        <br>
+            <mat-form-field>
+              <mat-select [(value)]="updateUserForm.value.role">
+                <mat-option *ngFor="let role of roles" [value]="role">
+                  {{role}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <button color="primary" mat-stroked-button type="submit">Submit User</button>
+            <button (click)="deleteItem($event, user)" color="warn" mat-stroked-button>Delete User</button>
+          </form>
+        </div>
 
-        <mat-form-field>
-          <mat-select [(value)]="updateUserForm.value.role">
-            <mat-option *ngFor="let role of roles" [value]="role">
-              {{role}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <br>
-        <button mat-stroked-button color="primary" type="submit">Submit User</button>
-        <button mat-stroked-button color="warn" (click)="deleteItem($event, user)">Delete User</button>
-      </form>
+      </ul>
     </div>
-
-  </ul>
-</div>
-
-<div *ngIf="users$ | async">
-  <button class="UsersBtn" mat-button (click)="getPrevSetOfUsers()">Get Prev Set Of Users</button>
-  <label>{{page$ | async}}</label>
-  <button class="UsersBtn" mat-button (click)="getNextSetOfUsers()">Get Next Set Of Users</button>
-</div>
-
-<p *ngIf="userToEdit">{{updateUserForm.value | json}}</p>
-
+  </mat-card-content>
+  <mat-card-actions>
+    <div *ngIf="users$ | async" style="display: flex; flex-direction: row; justify-content: center">
+      <button (click)="getPrevSetOfUsers()" class="UsersBtn" mat-button style="margin-left: 8px">Get Prev Set Of Users
+      </button>
+      <label
+        style="flex: 1 1 0%; margin: auto; display: flex; justify-content: center; align-items: center;">{{page$ | async}}</label>
+      <button (click)="getNextSetOfUsers()" class="UsersBtn" mat-button>Get Next Set Of Users</button>
+    </div>
+  </mat-card-actions>
+  <p *ngIf="userToEdit">{{updateUserForm.value | json}}</p>
+</mat-card>
 <div class="button-pos">
-  <button (click)="goToUserAdd()" mat-fab color="primary">
+  <button (click)="goToUserAdd()" color="primary" mat-fab>
     <mat-icon>person_add</mat-icon>
   </button>
 </div>
