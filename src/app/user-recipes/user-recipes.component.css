@@ -1,0 +1,13 @@
+
+
+.main {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+
+}
+
+.content {
+  grid-column: 2;
+}
+

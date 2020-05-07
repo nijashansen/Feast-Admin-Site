@@ -1,0 +1,24 @@
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-inlined-collum {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.spaced-around {
+  padding: 10px
+}
+
+.spaced-side {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.spaced-around-big {
+  padding: 15px
+}
+

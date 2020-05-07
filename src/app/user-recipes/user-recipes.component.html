@@ -1,1 +1,8 @@
-<app-add-user-recipe [ownerID]="getUserId()"></app-add-user-recipe>
+<div class="main">
+  <app-add-user-recipe [ownerID]="getUserId()" class="content" style="padding-bottom: 5px"></app-add-user-recipe>
+  <div class="content">
+    <div style="padding-bottom: 5px" *ngFor="let recipe of userRecipes$ | async">
+      <app-user-recipe-card [UserRecipe]="recipe"></app-user-recipe-card>
+    </div>
+  </div>
+</div>

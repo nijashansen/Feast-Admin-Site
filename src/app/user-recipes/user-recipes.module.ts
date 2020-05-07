@@ -8,10 +8,15 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import { UserRecipeCardComponent } from './user-recipe-card/user-recipe-card.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @NgModule({
-  declarations: [UserRecipesComponent, AddUserRecipeComponent],
+  declarations: [UserRecipesComponent, AddUserRecipeComponent, UserRecipeCardComponent],
   imports: [
     CommonModule,
     UserRecipesRoutingModule,
@@ -19,7 +24,10 @@ import {MatButtonModule} from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-
+    MatSnackBarModule,
+    MatIconModule,
+    MatCardModule,
+    MatDividerModule
   ]
 })
 export class UserRecipesModule {

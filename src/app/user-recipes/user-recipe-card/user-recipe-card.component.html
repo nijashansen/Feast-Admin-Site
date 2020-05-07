@@ -1,0 +1,40 @@
+<mat-card>
+  <mat-card-header>
+    <label class="mat-card-title" style="flex: auto; margin: auto">{{UserRecipe.name}}</label>
+    <button mat-icon-button (click)="switchActivation()">
+      <mat-icon *ngIf="active">keyboard_arrow_up</mat-icon>
+      <mat-icon *ngIf="!active">keyboard_arrow_down</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content *ngIf="active">
+    <mat-divider></mat-divider>
+    <div class="mat-card-content flex-inlined-collum spaced-around-big">
+      <mat-form-field class="spaced-around">
+        <input matInput placeholder="Name" type="text" value="{{UserRecipe.name}}">
+      </mat-form-field>
+      <mat-form-field class="spaced-around">
+        <input matInput placeholder="Estimated Time" type="number" value="{{UserRecipe.estimatedTime}}">
+      </mat-form-field>
+      <label class="spaced-side mat-card-subtitle">Ingredients</label>
+      <ul>
+        <li *ngFor="let ing of UserRecipe.ingredients">
+          <mat-form-field class="spaced-side">
+            <input matInput placeholder="Name" type="text" value="{{ing.name}}">
+          </mat-form-field>
+
+          <mat-form-field class="spaced-side">
+            <input matInput placeholder="Amount In Grams" type="number" value="{{ing.amount}}">
+          </mat-form-field>
+          <button color="warn" mat-raised-button type="button">Delete</button>
+        </li>
+      </ul>
+      <button class="spaced-side" color="primary" mat-icon-button type="button">+</button>
+    </div>
+  </mat-card-content>
+  <mat-divider *ngIf="active"></mat-divider>
+  <mat-card-actions *ngIf="active">
+
+    <button class="spaced-side" color="warn" mat-raised-button type="button">Delete Recipe</button>
+    <button class="spaced-side" color="accent" mat-raised-button type="submit">Update Recipe</button>
+  </mat-card-actions>
+</mat-card>

@@ -51,9 +51,7 @@ export class AddUserRecipeComponent implements OnInit {
   async submitHandler() {
     const rs = this.newRecipe.value;
     // @ts-ignore
-    this.userRecipeService.addUserRecipe(rs).pipe(catchError(err => {
-      console.log(err);
-    }));
+    this.userRecipeService.addUserRecipe(rs);
 
   }
 }

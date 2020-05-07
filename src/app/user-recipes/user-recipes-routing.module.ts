@@ -6,8 +6,14 @@ import {AddUserRecipeComponent} from './add-user-recipe/add-user-recipe.componen
 
 const routes: Routes =
   [
-    {path: '', component: UserRecipesComponent},
-    {path: 'addUserRecipe', component: AddUserRecipeComponent}
+    {
+      path: '',
+      component: UserRecipesComponent
+    },
+    {
+      path: 'new',
+      component: AddUserRecipeComponent
+    }
   ];
 
 @NgModule({
