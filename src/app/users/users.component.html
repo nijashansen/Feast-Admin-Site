@@ -46,6 +46,7 @@
       </ul>
     </div>
   </mat-card-content>
+  <mat-divider></mat-divider>
   <mat-card-actions>
     <div *ngIf="users$ | async" style="display: flex; flex-direction: row; justify-content: center">
       <button (click)="getPrevSetOfUsers()" class="UsersBtn" mat-button style="margin-left: 8px">Get Prev Set Of Users
