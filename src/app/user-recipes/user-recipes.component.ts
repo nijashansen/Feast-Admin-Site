@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Observable, of} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from 'rxjs';
 import {UserRecipe} from './Shared/userRecipe';
 import {UserRecipeService} from './Shared/user-recipe.service';
 
@@ -11,9 +11,11 @@ import {UserRecipeService} from './Shared/user-recipe.service';
 })
 export class UserRecipesComponent implements OnInit {
   userRecipes$: Observable<UserRecipe[]>;
-  userId: string = this.router.snapshot.params.uid;
+  userId: string = this.activatedRoute.snapshot.params.uid;
+  isAddComponentActive: boolean;
 
-  constructor(private router: ActivatedRoute, private userRecipesService: UserRecipeService) {
+  constructor(private activatedRoute: ActivatedRoute, private userRecipesService: UserRecipeService, public router: Router) {
+    this.isAddComponentActive = false;
   }
 
   ngOnInit(): void {
@@ -23,11 +25,15 @@ export class UserRecipesComponent implements OnInit {
 
 
   getUserId() {
-    return this.router.snapshot.params.uid;
+    return this.activatedRoute.snapshot.params.uid;
   }
 
-  dothing() {
+  public createNew() {
+    this.isAddComponentActive = true;
 
   }
 
+  public onCancel() {
+    this.isAddComponentActive = false;
+  }
 }

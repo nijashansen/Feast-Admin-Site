@@ -49,7 +49,7 @@ export class RecipesService {
 
 
   updateRecipe(recipe: Recipe): Promise<void> {
-     return this.fs.doc(`Recipes/${recipe.id}`).update(recipe);
+    return this.fs.doc(`Recipes/${recipe.id}`).update(recipe);
   }
 
 

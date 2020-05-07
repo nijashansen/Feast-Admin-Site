@@ -20,25 +20,18 @@
 
   <div class="loginContainer" *ngIf="loginWithEmail == true">
     <form [formGroup]="loginForm">
-
       <mat-form-field>
         <input matInput type="text" formControlName="email" placeholder="Email">
       </mat-form-field>
-
       <br>
-
       <mat-form-field>
         <input matInput type="password" formControlName="password" placeholder="Password">
       </mat-form-field>
-
       <br>
-
       <button mat-stroked-button (click)="loginWithEmailPassword()" routerLink="/home">Login</button>
       <button mat-stroked-button (click)="signUpWithEmailPassword()" routerLink="/home">sign up</button>
       <button mat-stroked-button (click)="loginWithEmailMethod()" routerLink="/home">Cancel</button>
-
     </form>
-
   </div>
 
   <div *ngIf="auth.authUser$ | async">

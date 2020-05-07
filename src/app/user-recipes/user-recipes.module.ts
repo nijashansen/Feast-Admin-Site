@@ -11,7 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
-import { UserRecipeCardComponent } from './user-recipe-card/user-recipe-card.component';
+import {UserRecipeCardComponent} from './user-recipe-card/user-recipe-card.component';
 import {MatDividerModule} from '@angular/material/divider';
 
 

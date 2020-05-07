@@ -4,8 +4,8 @@ import {Store} from '@ngxs/store';
 import {CreateUser} from '../shared/user.action';
 import {roles} from '../../../environments/environment';
 import {AuthUser} from '../shared/user';
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {Router} from "@angular/router";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-add',
@@ -45,7 +45,7 @@ export class UserAddComponent implements OnInit {
 
     this.store.dispatch(new CreateUser(email, password, info)).toPromise()
       .then(() => {
-        this.snackBar.open('success', '', {duration: 6000, panelClass: ['success']})
+        this.snackBar.open('success', '', {duration: 6000, panelClass: ['success']});
         this.router.navigate(['/users']);
       })
       .catch(e =>

@@ -1,14 +1,10 @@
 import {Injectable} from '@angular/core';
-import {
-  CanLoad,
-  Route,
-  UrlSegment
-} from '@angular/router';
+import {CanLoad, Route, UrlSegment} from '@angular/router';
 import {Observable} from 'rxjs';
 import {AuthenticationService} from '../services/authentication.service';
 import {map, take} from 'rxjs/operators';
 import {roles} from '../../environments/environment';
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'

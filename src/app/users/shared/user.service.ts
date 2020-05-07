@@ -27,33 +27,15 @@ export class UserService {
         .limit(5)).snapshotChanges().pipe(map(data => {
       this.newArray = [];
       data.forEach(doc => {
-        this.newArray.push({
-          uid: doc.payload.doc.id,
-          name: doc.payload.doc.data().name,
-          email: doc.payload.doc.data().email,
-          role: doc.payload.doc.data().role
-        });
+        const user = doc.payload.doc.data() as AuthUser;
+        user.uid = doc.payload.doc.id;
+        this.newArray.push(user);
       });
       return {
         users: this.newArray,
         lastVisible: data[data.length - 1].payload.doc.data().email,
         firstVisible: data[0].payload.doc.data().email
       } as UserPage;
-    }));
-  }
-
-  getLastUser(): Observable<string> {
-    return this.fs.collection<AuthUser>('Users', ref => ref.orderBy('email', 'desc')
-      .limit(1)).valueChanges().pipe(map(data => {
-      console.log(data);
-      return data[0].email; // .payload.doc.data().email;
-    }));
-  }
-
-  getFirstUser(): Observable<string> {
-    return this.fs.collection<AuthUser>('Users', ref => ref.orderBy('email')
-      .limit(1)).valueChanges().pipe(map(data => {
-      return data[0].email; //.payload.doc.data().email;
     }));
   }
 
@@ -83,12 +65,9 @@ export class UserService {
       if (data.length > 0) {
         this.newArray = [];
         data.forEach(doc => {
-          this.newArray.push({
-            uid: doc.payload.doc.id,
-            name: doc.payload.doc.data().name,
-            email: doc.payload.doc.data().email,
-            role: doc.payload.doc.data().role
-          });
+          const user = doc.payload.doc.data() as AuthUser;
+          user.uid = doc.payload.doc.id;
+          this.newArray.push(user);
         });
         return {
           users: this.newArray,
@@ -109,12 +88,9 @@ export class UserService {
       if (data.length > 0) {
         this.newArray = [];
         data.forEach(doc => {
-          this.newArray.push({
-            uid: doc.payload.doc.id,
-            name: doc.payload.doc.data().name,
-            email: doc.payload.doc.data().email,
-            role: doc.payload.doc.data().role
-          });
+          const user = doc.payload.doc.data() as AuthUser;
+          user.uid = doc.payload.doc.id;
+          this.newArray.push(user);
         });
         return {
           users: this.newArray,

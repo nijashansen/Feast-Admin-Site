@@ -70,7 +70,7 @@ export class RecipesState {
   }
 
   @Action(UpdateRecipe)
-  updateRecipe({getState, setState, dispatch}: StateContext<UpdateRecipe>, action: UpdateRecipe){
+  updateRecipe({getState, setState, dispatch}: StateContext<UpdateRecipe>, action: UpdateRecipe) {
     return this.recipesService.updateRecipe(action.recipe);
   }
 }
