@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
   }
 
   loginWithGoogle() {
-    this.auth.singInWithGoogle().then(() => this.snackBar.open('success', '', {duration: 600, panelClass: ['success']})).catch(reason => {
+    this.auth.signInGoogle().then(() => this.snackBar.open('success', '', {duration: 600, panelClass: ['success']})).catch(reason => {
       this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
 
     });
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
     const password = this.loginForm.value.password;
 
 
-    this.auth.signInWithEmailPassword(email, password)
+    this.auth.signInEmail(email, password)
       .then(() =>
         this.snackBar.open('success', '',
           {
@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
   signUpWithEmailPassword() {
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
-    this.auth.createUserWithEmailAndPassword(email, password).then(() => this.snackBar.open('success', '', {
+    this.auth.signUpEmail(email, password).then(() => this.snackBar.open('success', '', {
       duration: 600,
       panelClass: ['success']
     })).catch(reason => {

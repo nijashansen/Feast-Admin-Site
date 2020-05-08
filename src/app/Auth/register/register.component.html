@@ -1,0 +1,18 @@
+<div style=" padding: 10px">
+  <div style="display: flex; flex-direction: row; padding: 10px">
+    <p style="margin-right: 10px">Email</p>
+    <input [(ngModel)]="email" matInput/>
+  </div>
+  <div style="display: flex; flex-direction: row; padding: 10px">
+    <p style="margin-right: 10px">Password</p>
+    <input [(ngModel)]="pw1" matInput type="password"/>
+  </div>
+  <div style="display: flex; flex-direction: row; padding: 10px">
+    <p style="margin-right: 10px">Password</p>
+    <input [(ngModel)]="pw2" matInput type="password"/>
+  </div>
+  <div style="display: flex">
+    <button (click)="onOk()">Ok</button>
+    <button (click)="onCancel()">Cancel</button>
+  </div>
+</div>

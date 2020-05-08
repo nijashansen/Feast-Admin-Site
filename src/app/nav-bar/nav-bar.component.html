@@ -33,7 +33,7 @@
     <div class="mat-ripple" matripple="mat-button-ripple"></div>
     <div class="mat-button-focus-overlay"></div>
   </a>
-  <a (click)="this.router.navigate(['/profile/register'])" *ngIf="!(auth.authUser$ | async)" aria-disabled="false"
+  <a (click)="this.router.navigate(['/auth/register'])" *ngIf="!(auth.authUser$ | async)" aria-disabled="false"
      aria-label="Angular Material"
      class="mat-button mat-button-base" mat-button="" routerlink="/" tabindex="0">
     <span class="mat-button-wrapper">
@@ -42,7 +42,7 @@
     <div class="mat-ripple mat-button-ripple" matripple=""></div>
     <div class="mat-button-focus-overlay"></div>
   </a>
-  <a (click)="this.router.navigate(['/profile/login'])" *ngIf="!(auth.authUser$ | async)" aria-disabled="false"
+  <a (click)="this.router.navigate(['/auth/login'])" *ngIf="!(auth.authUser$ | async)" aria-disabled="false"
      aria-label="Angular Material"
      class=" mat-button mat-button-base" mat-button="" routerlink="/" tabindex="0">
     <span class="mat-button-wrapper">
