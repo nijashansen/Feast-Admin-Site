@@ -1,41 +1,70 @@
-<div class="mat-card">
-  <div class="mat-card-content">
-    <h1 class="mat-card-title">Add Recipe</h1>
+<form (ngSubmit)="submitHandler()" [formGroup]="form">
+  <mat-card>
+    <mat-card-header>
+      <label class="mat-card-title">Add New Recipe</label>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <mat-divider></mat-divider>
+      <div class="mat-card-content flex-inlined-collum spaced-around-big">
+        <mat-form-field class="spaced-around">
+          <input formControlName="name" matInput placeholder="Name" type="text" required>
+          <mat-error *ngIf="name.hasError('required')">
+            name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="spaced-around">
+          <input formControlName="estimatedTime" matInput placeholder="Estimated Time" type="number" required>
+          <mat-error *ngIf="estimatedTime.hasError('required')">
+            estimated time is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <label class="spaced-side mat-card-subtitle">Ingredients</label>
+        <ul>
+          <li *ngFor="let ing of ingredients.controls; let i = index " formArrayName="ingredients">
+            <div formGroupName="{{i}}">
+              <mat-form-field class="spaced-side">
+                <input formControlName="name" matInput placeholder="Name" type="text" required>
+                <mat-error *ngIf="ingredients.at(i).get('name').hasError('required')">
+                  Name is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
 
-
-    <form [formGroup]="form" (ngSubmit)="submitHandler()">
-      <hr>
-
-      <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name">
-      </mat-form-field>
-      <br>
-      <mat-form-field>
-        <input matInput placeholder="Estimated Time" formControlName="estimatedTime">
-      </mat-form-field>
-
-      <div formArrayName="ingredients">
-
-        <div *ngFor="let ing of ingredients.controls; let i=index" [formGroupName]="i">
-
-          <mat-form-field>
-            <input type="text" matInput placeholder="Name" formControlName="name">
-          </mat-form-field>
-
-          <mat-form-field class="spacerIng">
-            <input type="number" matInput placeholder="Amount In Grams" formControlName="amount">
-          </mat-form-field>
-
-          <button type="button" mat-raised-button color="warn" (click)="deleteIngredient(i)">Delete</button>
-
-        </div>
-
-        <button type="button" mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
-
+              <mat-form-field class="spaced-side">
+                <input formControlName="amount" matInput placeholder="Amount In Grams" type="number" required>
+                <label matSuffix>g</label>
+                <mat-error *ngIf="ingredients.at(i).get('amount').hasError('min')">
+                  must be <strong>more</strong> than 0
+                </mat-error>
+                <mat-error *ngIf="ingredients.at(i).get('amount').hasError('required')">
+                  amount is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              <button (click)="deleteIngredient(i)" color="warn" mat-icon-button type="button">
+                <mat-icon>clear</mat-icon>
+              </button>
+            </div>
+          </li>
+          <li>
+            <mat-form-field class="spaced-side">
+              <input disabled="true" matInput placeholder="Name" type="text">
+            </mat-form-field>
+            <mat-form-field class="spaced-side">
+              <input disabled="true" matInput placeholder="Amount In Grams" type="number">
+            </mat-form-field>
+            <button (click)="addIngredient()" class="spaced-side" color="primary" mat-icon-button type="button">
+              <mat-icon>add</mat-icon>
+            </button>
+          </li>
+        </ul>
       </div>
-      <button type="submit" mat-raised-button color="accent">Add Recipe</button>
-    </form>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+      <div></div>
+      <button color="accent" mat-raised-button type="submit">Save</button>
+      <button color="accent" mat-raised-button type="button" (click)="onCancel()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
 
-  </div>
-
-</div>
+</form>
