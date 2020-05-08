@@ -21,13 +21,15 @@ import {NavBarComponent} from './nav-bar/nav-bar.component';
 import {RoleGuard} from './guard/role-guard';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MaterialModule} from './material.module';
+import {AuthModule} from './Auth/auth.module';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
-
+    PageNotFoundComponent,
   ],
   imports: [
     MatSnackBarModule,
@@ -44,6 +46,7 @@ import {MaterialModule} from './material.module';
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
     MaterialModule,
+    AuthModule
 
   ],
 

@@ -38,7 +38,7 @@ export class AuthenticationService {
 
   }
 
-  async singInWithGoogle() {
+  async signInGoogle() {
     const provider = new auth.GoogleAuthProvider();
     const cred = await this.afAuth.signInWithPopup(provider);
     return this.updateUserInfo(cred);
@@ -76,13 +76,17 @@ export class AuthenticationService {
   }
 
 
-  async signInWithEmailPassword(email: string, password: string) {
+  async signInEmail(email: string, password: string) {
     const cred = await this.afAuth.signInWithEmailAndPassword(email, password);
     return this.updateUserInfo(cred);
   }
 
-  async createUserWithEmailAndPassword(email: string, password: string) {
+  async signUpEmail(email: string, password: string) {
     const cred = await this.afAuth.createUserWithEmailAndPassword(email, password);
     return this.updateUserInfo(cred);
+  }
+
+  resetPasswordEmail(email: string) {
+    return this.afAuth.sendPasswordResetEmail(email);
   }
 }
