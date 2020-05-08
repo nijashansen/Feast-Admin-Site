@@ -12,7 +12,7 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
   {
-    path: 'h',
+    path: '',
     redirectTo: 'home',
     pathMatch: 'full'
   },
@@ -33,7 +33,7 @@ const routes: Routes = [
     loadChildren: () => import('./user-recipes/user-recipes.module').then(m => m.UserRecipesModule)
   },
   {
-    path: '',
+    path: 'auth',
     loadChildren: () => import('./Auth/auth.module').then(m => m.AuthModule)
   },
   {
