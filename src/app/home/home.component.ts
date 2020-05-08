@@ -45,9 +45,8 @@ export class HomeComponent implements OnInit {
   }
 
   loginWithGoogle() {
-    this.auth.singInWithGoogle().
-    then(() => this.snackBar.open('success', '', {duration: 600, panelClass: ['success']})).
-    catch(reason => { this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
+    this.auth.singInWithGoogle().then(() => this.snackBar.open('success', '', {duration: 600, panelClass: ['success']})).catch(reason => {
+      this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
 
     });
   }
@@ -64,24 +63,32 @@ export class HomeComponent implements OnInit {
 
     this.auth.signInWithEmailPassword(email, password)
       .then(() =>
-        this.snackBar.open('success', '', {duration: 600, panelClass: ['success']})).
-           catch(reason => {
-                this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
+        this.snackBar.open('success', '',
+          {
+            duration: 600,
+            panelClass: ['success']
+          }))
+      .catch(reason => {
+        this.snackBar.open(reason, 'ok',
+          {
+            duration: 6000,
+            panelClass: ['fail']
+          });
 
-  });
+      });
     this.loginWithEmail = false;
   }
 
   signUpWithEmailPassword() {
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
-    this.auth.createUserWithEmailAndPassword(email, password).
-    then(() => this.snackBar.open('success', '', {duration: 600, panelClass: ['success']})).
-    catch(reason => { this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
-
-   });
+    this.auth.createUserWithEmailAndPassword(email, password).then(() => this.snackBar.open('success', '', {
+      duration: 600,
+      panelClass: ['success']
+    })).catch(reason => {
+      this.snackBar.open(reason, 'ok', {duration: 6000, panelClass: ['fail']});
+    });
   }
-
 
 
   loginWithEmailMethod() {

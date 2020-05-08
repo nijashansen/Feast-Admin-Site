@@ -12,6 +12,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {UserAddComponent} from './user-add/user-add.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import {MaterialModule} from '../material.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatIconModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MaterialModule
   ]
 })
 export class UsersModule {

@@ -18,9 +18,9 @@ import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {RecipesState} from './recipes/Shared/recipes.state';
 import {UserState} from './users/shared/user.state';
 import {NavBarComponent} from './nav-bar/nav-bar.component';
-import {MatIconModule} from '@angular/material/icon';
 import {RoleGuard} from './guard/role-guard';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MaterialModule} from './material.module';
 
 
 @NgModule({
@@ -43,7 +43,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
       , {developmentMode: !environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
-    MatIconModule,
+    MaterialModule,
 
   ],
 

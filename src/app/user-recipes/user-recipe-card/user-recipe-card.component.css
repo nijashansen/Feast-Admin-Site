@@ -1,12 +1,15 @@
-
 .flex-row {
   display: flex;
   flex-direction: row;
 }
 
 .flex-inlined-collum {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
+}
+
+.max-length-input {
+  max-width: 400px;
 }
 
 .spaced-around {

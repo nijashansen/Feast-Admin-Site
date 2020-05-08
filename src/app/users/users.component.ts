@@ -8,7 +8,7 @@ import {UserState} from './shared/user.state';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {roles} from '../../environments/environment';
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -102,7 +102,7 @@ export class UsersComponent implements OnInit {
 
     this.store.dispatch(new UpdateUser(info)).toPromise()
       .then(() => {
-        this.snackBar.open('success', '', {duration: 6000, panelClass: ['success']})
+        this.snackBar.open('success', '', {duration: 6000, panelClass: ['success']});
         this.router.navigate(['/users']);
       })
       .catch(e =>
@@ -114,7 +114,7 @@ export class UsersComponent implements OnInit {
     this.clearState();
     this.store.dispatch(new DeleteUser(user)).toPromise()
       .then(() => {
-        this.snackBar.open('success', '', {duration: 6000, panelClass: ['success']})
+        this.snackBar.open('success', '', {duration: 6000, panelClass: ['success']});
         this.router.navigate(['/users']);
       })
       .catch(e =>
@@ -147,6 +147,6 @@ export class UsersComponent implements OnInit {
 
 
   onSelect(uid: string) {
-    this.router.navigate(['/userRecipes', uid]);
+    this.router.navigate(['/user-recipe', uid]);
   }
 }

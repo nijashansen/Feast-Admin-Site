@@ -7,11 +7,11 @@ import {AddUserRecipeComponent} from './add-user-recipe/add-user-recipe.componen
 const routes: Routes =
   [
     {
-      path: '',
+      path: ':uid',
       component: UserRecipesComponent
     },
     {
-      path: 'new',
+      path: 'add/:uid',
       component: AddUserRecipeComponent
     }
   ];

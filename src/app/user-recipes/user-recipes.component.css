@@ -1,13 +1,5 @@
-
-
-.main {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 20% 60% 20%;
-
+.add-button {
+  position: fixed;
+  right: 2%;
+  bottom: 2%;
 }
-
-.content {
-  grid-column: 2;
-}
-

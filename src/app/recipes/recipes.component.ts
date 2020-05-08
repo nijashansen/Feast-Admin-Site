@@ -6,7 +6,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Select, Store} from '@ngxs/store';
 import {DeleteRecipe, GetAllRecipes, UpdateRecipe} from './Shared/recipe.action';
 import {RecipesState} from './Shared/recipes.state';
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -60,15 +60,7 @@ export class RecipesComponent implements OnInit {
     this.updateRecipe.patchValue({name: recipe.name});
     this.updateRecipe.patchValue({estimatedTime: recipe.estimatedTime});
     this.updateRecipe.value.ingredients.fill(recipe.ingredients);
-    const formArray = new FormArray([]);
-    for (const ing of recipe.ingredients) {
-      const ingredient = this.formBuilder.group({
-        name: ing.name,
-        amount: ing.amount
-      });
-      formArray.push(ingredient);
-    }
-    this.updateRecipe.setControl('ingredients', formArray);
+
   }
 
   clearState() {

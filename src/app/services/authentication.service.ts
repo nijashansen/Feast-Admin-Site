@@ -21,10 +21,11 @@ export class AuthenticationService {
       switchMap(user => {
         if (user) {
           return this.fs.doc<AuthUser>(`Users/${user.uid}`)
-            .valueChanges().pipe(map(value => {
+            .snapshotChanges().pipe(map(value => {
               if (value) {
-                value.uid = user.uid;
-                return value;
+                const loggedIn = value.payload.data() as AuthUser;
+                loggedIn.uid = user.uid;
+                return loggedIn;
               } else {
                 return null;
               }
@@ -54,14 +55,12 @@ export class AuthenticationService {
           name: userCred.user.displayName,
           role: roles.standard
         };
+      } else {
+        data = {
+          email: userCred.user.email,
+          role: roles.standard
+        };
       }
-      else
-        {
-          data = {
-            email: userCred.user.email,
-            role: roles.standard
-          };
-        }
     } else {
       data = {
         email: userCred.user.email,

@@ -15,13 +15,36 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.fail{
-  background-color: red;
+.fail {
+  background-color: #B33A3A;
   color: white;
 }
 
-.success{
-  background-color: greenyellow;
-  color: black;
+.success {
+  background-color: #1DB954;
+  color: white;
 
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-inlined-collum {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.spaced-around {
+  padding: 10px
+}
+
+.spaced-side {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.spaced-around-big {
+  padding: 15px
 }
