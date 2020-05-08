@@ -24,11 +24,19 @@
     <div class="mat-ripple" matripple="mat-button-ripple"></div>
     <div class="mat-button-focus-overlay"></div>
   </a>
-  <a (click)="this.router.navigate(['/user'])" *ngIf="authState" aria-disabled="false"
+  <a *ngIf="authState" aria-disabled="false"
      class="mat-button mat-button-base" tabindex="0">
     <span class="mat-button-wrapper">
       <span *ngIf="authState.name">{{authState.name}}</span>
       <span *ngIf="!authState.name">{{authState.email}}</span>
+    </span>
+    <div class="mat-ripple" matripple="mat-button-ripple"></div>
+    <div class="mat-button-focus-overlay"></div>
+  </a>
+  <a *ngIf="authState" aria-disabled="false" (click)="signOut()"
+     class="mat-button mat-button-base" tabindex="0" color="warn" style="background-color: #e91e63">
+    <span class="mat-button-wrapper">
+      <span *ngIf="authState.name">Log out</span>
     </span>
     <div class="mat-ripple" matripple="mat-button-ripple"></div>
     <div class="mat-button-focus-overlay"></div>

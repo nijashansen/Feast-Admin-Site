@@ -1,5 +1,4 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Recipe} from '../Shared/recipe';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Store} from '@ngxs/store';
@@ -51,7 +50,6 @@ export class AddRecipeComponent implements OnInit {
   get estimatedTime() {
     return this.form.get('estimatedTime') as FormControl;
   }
-
 
 
   deleteIngredient(i) {

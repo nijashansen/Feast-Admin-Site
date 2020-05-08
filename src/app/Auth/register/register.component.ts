@@ -29,6 +29,7 @@ export class RegisterComponent implements OnInit {
       console.log('password not the same');
     }
   }
+
   public onCancel() {
     console.log('cancel pressed');
     this.router.navigate(['']);

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private auth: AuthenticationService,
-    public router: Router
+    public router: Router,
+    private snackBar: MatSnackBar
   ) {
   }
 
@@ -29,19 +31,42 @@ export class LoginComponent implements OnInit {
 
   signIn() {
     if (this.loginForm.valid) {
-      this.auth.signInEmail(this.email, this.password).then(() => {
-        this.router.navigate(['/home']);
-      }).catch(reason => {});
+      this.auth.signInEmail(this.email, this.password)
+        .then(() => {
+          this.snackBar.open('Welcome', '',
+            {
+              duration: 3000,
+              panelClass: ['success']
+            });
+          this.router.navigate(['/home']);
+        })
+        .catch(reason => {
+          this.snackBar.open(reason, '',
+            {
+              duration: 3000,
+              panelClass: ['fail']
+            });
+        });
     }
   }
 
   signInGoogle() {
-    this.auth.signInGoogle();
-    this.email = '';
-    this.password = '';
-  }
+    this.auth.signInGoogle()
+      .then(() => {
+        this.snackBar.open('Welcome', '',
+          {
+            duration: 3000,
+            panelClass: ['success']
+          });
+        this.router.navigate(['/home']);
+      })
+      .catch(reason => {
+        this.snackBar.open(reason, 'ok',
+          {
+            duration: 3000,
+            panelClass: ['fail']
+          });
 
-  signOut() {
-    this.auth.signOut();
+      });
   }
 }

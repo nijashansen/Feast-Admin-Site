@@ -10,24 +10,24 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
-import { RecipeCardComponent } from './Shared/recipe-card/recipe-card.component';
-import {MatDividerModule} from "@angular/material/divider";
+import {RecipeCardComponent} from './Shared/recipe-card/recipe-card.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @NgModule({
   declarations: [RecipesComponent, AddRecipeComponent, RecipeCardComponent],
-    imports: [
-        CommonModule,
-        RecipesRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        MatDividerModule
-    ]
+  imports: [
+    CommonModule,
+    RecipesRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatDividerModule
+  ]
 })
 export class RecipesModule {
 }

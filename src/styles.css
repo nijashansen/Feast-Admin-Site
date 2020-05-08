@@ -1,9 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url(https://fonts.googleapis.com/css?family=Roboto:500);
 
 html, body {
   height: 100%;
-  background-color: lightgray;
+  background-color: #dedbe4;
 }
 
 app-nav-bar {
@@ -18,15 +19,23 @@ body {
 .fail {
   background-color: #B33A3A;
   color: white;
+  margin: 11px 11px 0 0;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  font-family: "Roboto";
 }
 
 .success {
   background-color: #1DB954;
   color: white;
+  margin: 11px 11px 0 0;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  font-family: "Roboto";
 
 }
 
-.margin-auto{
+.margin-auto {
   margin: auto;
 }
 
@@ -51,4 +60,14 @@ body {
 
 .spaced-around-big {
   padding: 15px
+}
+
+.add-button {
+  position: fixed;
+  right: 2%;
+  bottom: 2%;
+}
+
+.container {
+  text-align: center;
 }
