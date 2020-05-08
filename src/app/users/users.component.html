@@ -58,7 +58,7 @@
   <p *ngIf="userToEdit">{{updateUserForm.value | json}}</p>
 </mat-card>
 <div class="button-pos">
-  <button (click)="goToUserAdd()" color="primary" mat-fab>
+  <button mat-fab (click)="goToUserAdd()" color="primary">
     <mat-icon>person_add</mat-icon>
   </button>
 </div>

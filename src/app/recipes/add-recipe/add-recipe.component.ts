@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Recipe} from '../Shared/recipe';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Store} from '@ngxs/store';
 import {CreateRecipe} from '../Shared/recipe.action';
@@ -11,42 +11,48 @@ import {CreateRecipe} from '../Shared/recipe.action';
   styleUrls: ['./add-recipe.component.css']
 })
 export class AddRecipeComponent implements OnInit {
+  @Output() cancel: EventEmitter<Event> = new EventEmitter<Event>();
+
+  form = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.min(1)]),
+    estimatedTime: new FormControl('', [Validators.required]),
+    ingredients: new FormArray([], [Validators.required]),
+  });
 
 
-  form: FormGroup;
-  recipe: Recipe = {
-    ingredients: [],
-    estimatedTime: 0,
-    name: '',
-  };
-
-  loading = false;
   success = false;
 
   constructor(private store: Store, private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
   }
 
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      name: '',
-      estimatedTime: 0,
-      ingredients: this.formBuilder.array([])
-
+  addIngredient() {
+    const ingredient = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      amount: new FormControl('', [Validators.required, Validators.min(1)])
     });
+    this.ingredients.push(ingredient);
+  }
 
+  ngOnInit(): void {
+  }
+
+  onCancel() {
+    this.cancel.emit();
   }
 
   get ingredients() {
     return this.form.get('ingredients') as FormArray;
   }
 
-  addIngredient() {
-    const ingredient = this.formBuilder.group({
-      name: '',
-      amount: 0
-    });
-    this.ingredients.push(ingredient);
+  get name() {
+    return this.form.get('name') as FormControl;
   }
+
+  get estimatedTime() {
+    return this.form.get('estimatedTime') as FormControl;
+  }
+
+
 
   deleteIngredient(i) {
     this.ingredients.removeAt(i);
@@ -56,18 +62,14 @@ export class AddRecipeComponent implements OnInit {
   async submitHandler() {
 
 
-    this.recipe = this.form.value;
-
-    try {
-      this.store.dispatch(new CreateRecipe(this.recipe));
-
-    } catch (err) {
-      this.snackBar.open(err, 'ok', {duration: 7000, panelClass: ['fail']});
-      console.error(err);
+    if (this.form.valid) {
+      const rs = this.form.value;
+      this.store.dispatch(new CreateRecipe(rs)).toPromise().then(() => this.snackBar.open
+      ('success', '', {duration: 600, panelClass: ['success']}))
+        .catch(reason => {
+          this.snackBar.open(reason, 'ok', {duration: 7000, panelClass: ['fail']});
+        });
     }
-    this.snackBar.open(this.recipe.name + 'Was Added', '', {duration: 600, panelClass: ['success']});
-
-    this.recipe = null;
-
   }
+
 }

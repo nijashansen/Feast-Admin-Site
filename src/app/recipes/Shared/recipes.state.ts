@@ -3,7 +3,7 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {Injectable} from '@angular/core';
 import {RecipesService} from './recipes.service';
 import {CreateRecipe, DeleteRecipe, GetAllRecipes, UpdateRecipe} from './recipe.action';
-import {tap} from 'rxjs/operators';
+import {first, tap} from 'rxjs/operators';
 
 export class RecipesStateModel {
   recipes: Recipe[];
