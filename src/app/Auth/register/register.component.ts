@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication.service';
+import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -9,28 +11,49 @@ import {AuthenticationService} from '../../services/authentication.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  email = '';
-  pw1 = '';
-  pw2 = '';
+  passwordError = 'password';
+  public signUpForm: FormGroup = new FormGroup({
+    username: new FormControl('', [Validators.pattern(/^[\w\s]+$/)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
 
-  constructor(public auth: AuthenticationService, public router: Router) {
+  constructor(public auth: AuthenticationService, public router: Router, private snackBar: MatSnackBar) {
+    this.signUpForm.setControl('confirm_password', new FormControl('', [
+      Validators.required,
+      this.passwordConfirming(this.signUpForm.get('password'))
+    ]));
+
   }
 
   ngOnInit() {
   }
 
-  public onOk() {
-    console.log('em: ' + this.email + ', pw1: ' + this.pw1 + ', pw2: ' + this.pw2);
-    if (this.pw1 === this.pw2) {
-      this.auth.signUpEmail(this.email, this.pw1);
-      console.log('user created');
-      this.router.navigate(['/home']);
-    } else {
-      console.log('password not the same');
-    }
-  }
   public onCancel() {
     console.log('cancel pressed');
-    this.router.navigate(['']);
+    this.router.navigate(['/home']);
+  }
+
+
+  passwordConfirming(p: AbstractControl): ValidatorFn {
+    return (currentControl: AbstractControl): { [key: string]: any } => {
+      if (p.value !== currentControl.value) {
+        const temp = {};
+        temp[this.passwordError] = true;
+        return temp;
+      }
+    };
+  }
+
+  public onSignUp() {
+    if (this.signUpForm.valid) {
+      this.auth.signUpEmail('', '')
+        .then(() => {
+
+        })
+        .catch(() => {
+
+        });
+    }
   }
 }

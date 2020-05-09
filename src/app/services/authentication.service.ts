@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {auth} from 'firebase';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
-import {from, Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {AuthUser} from '../users/shared/user';
 import {map, switchMap} from 'rxjs/operators';
 import {roles} from '../../environments/environment';
@@ -72,7 +72,7 @@ export class AuthenticationService {
   }
 
   signOut() {
-    return from(this.afAuth.signOut());
+    return this.afAuth.signOut();
   }
 
 

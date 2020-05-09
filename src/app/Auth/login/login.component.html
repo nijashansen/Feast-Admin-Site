@@ -1,34 +1,50 @@
 <mat-card>
-  <form [formGroup]="loginForm">
+  <form [formGroup]="loginForm" (ngSubmit)="signIn()">
     <div class="main">
       <div align="center" style="padding: 20px; height: fit-content; grid-column: 2">
         <div style="display: flex; flex-direction: column; width: fit-content; margin: auto; height: 100%">
-          <mat-form-field appearance="legacy">
-            <mat-label>Fill form field</mat-label>
-            <input matInput placeholder="Placeholder" formControlName="userName">
-            <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
-            <mat-hint>Hint</mat-hint>
+          <div style="height: fit-content; width: fit-content; margin: auto;">
+            <mat-icon class="icon" color="primary">account_circle</mat-icon>
+          </div>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput placeholder="Placeholder">
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="isWrongPass">
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('email').hasError('email')">
+              is not a valid email
+            </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="legacy">
-            <mat-label>Fill form field</mat-label>
-            <input matInput placeholder="Placeholder" formControlName="password">
-            <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
-            <mat-hint>Hint</mat-hint>
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput placeholder="Placeholder">
+            <mat-icon matPrefix>vpn_key</mat-icon>
+            <mat-hint (click)="router.navigate(['/auth/reset'])" class="reset-link">...forgotten
+              password?
+            </mat-hint>
           </mat-form-field>
-          <a (click)="router.navigate(['/auth/reset'])" style="cursor: pointer; color: blue; ">...forgotten
-            password?</a>
         </div>
-        <div class="flex-row margin-auto">
-          <button mat-raised-button color="primary" type="summit">Sign in</button>
-          <button mat-raised-button color="primary" type="button">Cancel</button>
+        <div style="padding: 10px">
+          <button class="login-button" color="primary" mat-raised-button type="summit">Sign in</button>
+          <button class="login-button" color="primary" mat-raised-button type="button"
+                  (click)="router.navigate(['/home'])">Cancel
+          </button>
         </div>
       </div>
       <div style="grid-column: 3">
-        <button (click)="signInGoogle()">Google</button>
+        <div (click)="signInGoogle()" class="google-btn">
+          <div class="google-icon-wrapper">
+            <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+          </div>
+          <p class="btn-text"><b>Sign in with google</b></p>
+        </div>
       </div>
     </div>
   </form>
 </mat-card>
+
+
 
 
 

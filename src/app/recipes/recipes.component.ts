@@ -7,9 +7,6 @@ import {RecipesState} from './Shared/recipes.state';
 import {GetAllRecipes} from './Shared/recipe.action';
 
 
-
-
-
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
@@ -29,8 +26,7 @@ export class RecipesComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new GetAllRecipes());
-}
-
+  }
 
 
   public createNew() {
