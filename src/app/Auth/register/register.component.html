@@ -1,18 +1,45 @@
-<div style=" padding: 10px">
-  <div style="display: flex; flex-direction: row; padding: 10px">
-    <p style="margin-right: 10px">Email</p>
-    <input [(ngModel)]="email" matInput/>
-  </div>
-  <div style="display: flex; flex-direction: row; padding: 10px">
-    <p style="margin-right: 10px">Password</p>
-    <input [(ngModel)]="pw1" matInput type="password"/>
-  </div>
-  <div style="display: flex; flex-direction: row; padding: 10px">
-    <p style="margin-right: 10px">Password</p>
-    <input [(ngModel)]="pw2" matInput type="password"/>
-  </div>
-  <div style="display: flex">
-    <button (click)="onOk()">Ok</button>
-    <button (click)="onCancel()">Cancel</button>
-  </div>
-</div>
+<form [formGroup]="signUpForm">
+  <mat-card>
+    <mat-card-header>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="signup-container">
+        <div style="display: flex; flex-direction: column; width: 30%; padding: 5px">
+          <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input formControlName="username" matInput>
+            <mat-error>
+              Username contain special symbols
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput placeholder="ex. name@xyz.com" required>
+            <mat-error *ngIf="signUpForm.get('email').hasError('email')">
+              is not a valid <strong>email</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput required type="password">
+            <mat-error *ngIf="signUpForm.get('password').hasError('minlength')">
+              must be more than <strong>6</strong> characters
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Confirm Password</mat-label>
+            <input formControlName="confirm_password" matInput required type="password">
+            <mat-error *ngIf="signUpForm.get('confirm_password').hasError(passwordError)">
+              Passwords does <strong>not</strong> match
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button (click)="onSignUp()" class="sign-button" color="primary" mat-raised-button type="summit">Sign up</button>
+          <button (click)="onCancel()" class="sign-button" color="primary" mat-raised-button type="button">Cancel
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>

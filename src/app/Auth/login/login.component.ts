@@ -3,6 +3,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -15,15 +16,17 @@ export class LoginComponent implements OnInit {
   password: string;
 
   loginForm: FormGroup = new FormGroup({
-    userName: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
+  public isWrongPass: Observable<boolean>;
 
   constructor(
     private auth: AuthenticationService,
     public router: Router,
     private snackBar: MatSnackBar
   ) {
+    this.isWrongPass = of(false);
   }
 
   ngOnInit() {
@@ -31,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   signIn() {
     if (this.loginForm.valid) {
-      this.auth.signInEmail(this.email, this.password)
+      this.auth.signInEmail(this.loginForm.value.email, this.loginForm.value.password)
         .then(() => {
           this.snackBar.open('Welcome', '',
             {
@@ -41,11 +44,21 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/home']);
         })
         .catch(reason => {
-          this.snackBar.open(reason, '',
-            {
-              duration: 3000,
-              panelClass: ['fail']
-            });
+          console.log(reason);
+          if (reason.code === 'auth/user-not-found') {
+            this.snackBar.open('User does not Exist', '',
+              {
+                duration: 6000,
+                panelClass: ['fail']
+              });
+          } else { //todo wrong password case
+            this.snackBar.open(reason, '',
+              {
+                duration: 3000,
+                panelClass: ['fail']
+              });
+          }
+          this.isWrongPass = of(false);
         });
     }
   }

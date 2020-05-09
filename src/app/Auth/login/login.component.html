@@ -7,12 +7,17 @@
             <mat-icon class="icon" color="primary">account_circle</mat-icon>
           </div>
           <mat-form-field>
-            <mat-label>username</mat-label>
-            <input formControlName="userName" matInput placeholder="Placeholder">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput placeholder="Placeholder">
             <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="isWrongPass">
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('email').hasError('email')">
+              is not a valid email
+            </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>password</mat-label>
+            <mat-label>Password</mat-label>
             <input formControlName="password" matInput placeholder="Placeholder">
             <mat-icon matPrefix>vpn_key</mat-icon>
             <mat-hint (click)="router.navigate(['/auth/reset'])" class="reset-link">...forgotten
