@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {UserRecipe} from './userRecipe';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {from, Observable} from 'rxjs';
+import {first, map} from 'rxjs/operators';
 
 const ServicePart = 'UserRecipe';
 
@@ -14,6 +14,7 @@ export class UserRecipeService {
   constructor(private fs: AngularFirestore) {
   }
 
+  /*
   getRecipeById(urID: string): Observable<UserRecipe> {
     return this.fs.collection<UserRecipe>(ServicePart).doc<UserRecipe>(urID).valueChanges().pipe(map(response => {
         console.log(2, response);
@@ -36,7 +37,10 @@ export class UserRecipeService {
     }));
   }
 
+   */
+
   getAllRecipesForUser(userId: string): Observable<UserRecipe[]> {
+    debugger
     return this.fs.collection<UserRecipe>(ServicePart, ref => ref.where('userId', '==', userId))
       .snapshotChanges()
       .pipe(map(response => {
@@ -51,18 +55,24 @@ export class UserRecipeService {
   }
 
 
-  addUserRecipe(recipe: UserRecipe): Promise<any> {
-    return this.fs.collection(ServicePart).add(recipe);
+  addUserRecipe(recipe: UserRecipe): Observable<UserRecipe> {
+    return from(this.fs.collection(ServicePart).add(recipe)).pipe(map(() => {
+      return recipe;
+    }));
   }
 
 
-  deleteUserRecipe(urId: string): Promise<void> {
-    return this.fs.doc(`${ServicePart}/${urId}`).delete();
+  deleteUserRecipe(urId: string): Observable<any> {
+    return from(this.fs.doc(`${ServicePart}/${urId}`).delete()).pipe(map(() => {
+      return urId;
+    }));
   }
 
 
-  updateUserRecipe(recipe: UserRecipe): Promise<void> {
-    return this.fs.doc(`${ServicePart}/${recipe.id}`).update(recipe);
+  updateUserRecipe(recipe: UserRecipe): Observable<UserRecipe> {
+    return from(this.fs.doc(`${ServicePart}/${recipe.id}`).update(recipe)).pipe(map(() => {
+      return recipe;
+    }));
   }
 
 }

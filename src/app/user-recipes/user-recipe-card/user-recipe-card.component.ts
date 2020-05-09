@@ -2,7 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {UserRecipe} from '../Shared/userRecipe';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {UserRecipeService} from '../Shared/user-recipe.service';
+import {Store} from "@ngxs/store";
+import {DeleteUserRecipe, UpdateUserRecipe} from "../Shared/userRecipes.action";
 
 @Component({
   selector: 'app-user-recipe-card',
@@ -17,7 +18,7 @@ export class UserRecipeCardComponent implements OnInit {
   updateRecipe: FormGroup;
   public edit: boolean;
 
-  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar, private urService: UserRecipeService) {
+  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar, private store: Store) {
     this.active = false;
     this.edit = false;
   }
@@ -78,7 +79,7 @@ export class UserRecipeCardComponent implements OnInit {
     if (this.updateRecipe.valid) {
       const updated = this.updateRecipe.value;
       console.log(updated);
-      this.urService.updateUserRecipe(updated)
+      this.store.dispatch(new UpdateUserRecipe(updated)).toPromise()
         .then(() => {
           this.snackBar.open('Recipe was Updated', '',
             {
@@ -115,7 +116,7 @@ export class UserRecipeCardComponent implements OnInit {
   }
 
   public onDelete() {
-    this.urService.deleteUserRecipe(this.userRecipe.id)
+    this.store.dispatch(new DeleteUserRecipe(this.userRecipe.id)).toPromise()
       .then(() => {
         this.snackBar.open('Recipe was Deleted', '',
           {

@@ -2,12 +2,12 @@
   <app-add-user-recipe (cancel)="onCancel()" [ownerID]="getUserId()"
                        style="padding-bottom: 5px"></app-add-user-recipe>
 </div>
-<mat-card *ngIf="(userRecipes$|async).length === 0">
+<mat-card *ngIf="(recipes$|async).length === 0">
   <mat-card-header>
     <mat-card-title>No recipes found...</mat-card-title>
   </mat-card-header>
 </mat-card>
-<div *ngFor="let recipe of userRecipes$ | async" style="padding-bottom: 5px">
+<div *ngFor="let recipe of recipes$ | async" style="padding-bottom: 5px">
   <app-user-recipe-card [userRecipe]="recipe"></app-user-recipe-card>
 </div>
 <div class="add-button">

@@ -3,7 +3,8 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {Injectable} from '@angular/core';
 import {RecipesService} from './recipes.service';
 import {CreateRecipe, DeleteRecipe, GetAllRecipes, UpdateRecipe} from './recipe.action';
-import {first, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
+import {patch} from '@ngxs/store/operators';
 
 export class RecipesStateModel {
   recipes: Recipe[];
@@ -43,7 +44,7 @@ export class RecipesState {
         tap(allRecipes => {
           setState({
             ...state,
-            recipes: allRecipes,
+            recipes: allRecipes
           });
         })
       );
@@ -51,27 +52,48 @@ export class RecipesState {
 
 
   @Action(DeleteRecipe)
-  deleteRecipe({getState, setState, dispatch}: StateContext<RecipesStateModel>, action: DeleteRecipe) {
-    return this.recipesService.deleteRecipe(action.recipe);
+  deleteRecipe({getState, setState}: StateContext<RecipesStateModel>, action: DeleteRecipe) {
+    return this.recipesService.deleteRecipe(action.recipe).pipe(tap(() => {
+      const state = getState();
+      const stateArray = state.recipes.filter(item => item.id !== action.recipe.id);
+      setState({
+        ...state,
+        recipes: stateArray
+      });
+    }));
+  }
+
+  @Action(UpdateRecipe)
+  updateRecipe({getState, setState}: StateContext<RecipesStateModel>, action: UpdateRecipe) {
+    return this.recipesService.updateRecipe(action.recipe).pipe(tap(result => {
+      const state = getState();
+      const list = [...state.recipes];
+      const index = list.findIndex(item => item.id === action.recipe.id);
+      list[index] = result;
+      setState({
+        ...state,
+        recipes: list
+      });
+    }));
   }
 
 
   @Action(CreateRecipe)
-  createRecipe({getState, setState, dispatch}: StateContext<RecipesStateModel>, action: CreateRecipe) {
-    const state = getState();
+  createRecipe({getState, setState}: StateContext<RecipesStateModel>, action: CreateRecipe) {
     return this.recipesService.addRecipe(action.recipe).pipe(
       tap(() => {
-        setState({
-            ...state,
-          }
+        const state = getState();
+        setState(
+          patch({
+            recipes: [...state.recipes, action.recipe]
+          })
         );
       })
     );
   }
 
-  @Action(UpdateRecipe)
-  updateRecipe({getState, setState, dispatch}: StateContext<UpdateRecipe>, action: UpdateRecipe) {
-    return this.recipesService.updateRecipe(action.recipe);
-  }
+
 }
+
+
 

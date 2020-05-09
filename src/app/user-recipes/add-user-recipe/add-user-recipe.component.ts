@@ -1,6 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserRecipeService} from '../Shared/user-recipe.service';
+import {Store} from "@ngxs/store";
+import {Action} from "rxjs/internal/scheduler/Action";
+import {AddUserRecipe} from "../Shared/userRecipes.action";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-user-recipe',
@@ -19,7 +23,7 @@ export class AddUserRecipeComponent implements OnInit {
     ingredients: new FormArray([], [Validators.required]),
   });
 
-  constructor(private formBuilder: FormBuilder, private userRecipeService: UserRecipeService) {
+  constructor(private formBuilder: FormBuilder, private store: Store, private snackBar: MatSnackBar) {
   }
 
   get ingredients() {
@@ -57,7 +61,11 @@ export class AddUserRecipeComponent implements OnInit {
   submitHandler() {
     if (this.newRecipe.valid) {
       const rs = this.newRecipe.value;
-      this.userRecipeService.addUserRecipe(rs).then().catch();
+      this.store.dispatch(new AddUserRecipe(rs)).toPromise().then(() => this.snackBar.open
+      ('success', '', {duration: 600, panelClass: ['success']}))
+        .catch(reason => {
+          this.snackBar.open(reason, 'ok', {duration: 7000, panelClass: ['fail']});
+        });
     }
-  }
+    }
 }

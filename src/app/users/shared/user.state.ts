@@ -76,13 +76,13 @@ export class UserState {
 
 
   @Action(DeleteUser)
-  deleteUser({getState, setState, dispatch}: StateContext<UserStateModel>, action: DeleteUser) {
+  deleteUser({}: StateContext<UserStateModel>, action: DeleteUser) {
     return this.userService.deleteUser(action.user);
   }
 
 
   @Action(CreateUser)
-  createUser({getState, setState, dispatch}: StateContext<UserStateModel>, action: CreateUser) {
+  createUser({}: StateContext<UserStateModel>, action: CreateUser) {
     return this.userService.createUserWithEmailAndPassword(action.email, action.password, action.user);
 
   }
