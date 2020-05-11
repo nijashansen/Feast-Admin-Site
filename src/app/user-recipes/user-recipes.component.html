@@ -2,12 +2,18 @@
   <app-add-user-recipe (cancel)="onCancel()" [ownerID]="getUserId()"
                        style="padding-bottom: 5px"></app-add-user-recipe>
 </div>
-<mat-card *ngIf="(recipes$|async).length === 0">
+<mat-card *ngIf="(userRecipes$|async).length === 0">
   <mat-card-header>
     <mat-card-title>No recipes found...</mat-card-title>
   </mat-card-header>
+  <div class="add-button">
+    <button (click)="createNew()" color="primary" mat-fab>
+      <mat-icon style="padding-left: 5px">note_add</mat-icon>
+    </button>
+  </div>
 </mat-card>
-<div *ngFor="let recipe of recipes$ | async" style="padding-bottom: 5px">
+
+<div *ngFor="let recipe of userRecipes$ | async" style="padding-bottom: 5px">
   <app-user-recipe-card [userRecipe]="recipe"></app-user-recipe-card>
 </div>
 <div class="add-button">

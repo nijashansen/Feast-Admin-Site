@@ -25,8 +25,6 @@ export class UsersComponent implements OnInit {
 
   lastUser: string;
   firstUser: string;
-  lastItem: string;
-  firstItem: string;
   roles: string[];
 
   editState: boolean;

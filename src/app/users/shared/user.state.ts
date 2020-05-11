@@ -88,7 +88,7 @@ export class UserState {
   }
 
   @Action(UpdateUser)
-  updateUser({getState, setState, dispatch}: StateContext<UserStateModel>, action: UpdateUser) {
+  updateUser({}: StateContext<UserStateModel>, action: UpdateUser) {
     return this.userService.updateUser(action.user);
   }
 

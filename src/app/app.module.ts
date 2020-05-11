@@ -23,6 +23,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MaterialModule} from './material.module';
 import {AuthModule} from './Auth/auth.module';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {UserRecipeState} from "./user-recipes/Shared/userRecipe.state";
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
     HomeModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([RecipesState, UserState]
+    NgxsModule.forRoot([RecipesState, UserState, UserRecipeState]
       , {developmentMode: !environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),

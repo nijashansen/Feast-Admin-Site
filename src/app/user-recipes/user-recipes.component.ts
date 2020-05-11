@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
-import {GetAllRecipesForUser} from './Shared/userRecipes.action';
 import {UserRecipeState} from './Shared/userRecipe.state';
 import {UserRecipe} from './Shared/userRecipe';
 import {Select, Store} from '@ngxs/store';
+import {GetAllRecipesForUser} from './Shared/userRecipes.action';
+import {UserRecipeService} from "./Shared/user-recipe.service";
 
 
 @Component({
@@ -14,21 +15,23 @@ import {Select, Store} from '@ngxs/store';
 })
 export class UserRecipesComponent implements OnInit {
 
-  @Select(UserRecipeState.recipes)
-  recipes$: Observable<UserRecipe[]>;
+
+  @Select(UserRecipeState.UserRecipes)
+  userRecipes$: Observable<UserRecipe[]>;
+
 
   userId: string = this.activatedRoute.snapshot.params.uid;
   isAddComponentActive: boolean;
 
 
-
-  constructor(private activatedRoute: ActivatedRoute, private store: Store, public router: Router) {
+  constructor(private activatedRoute: ActivatedRoute, public router: Router, private userRecipesService: UserRecipeService, private store: Store) {
     this.isAddComponentActive = false;
   }
 
   ngOnInit(): void {
-  this.store.dispatch(new GetAllRecipesForUser(this.userId));
-    debugger;
+    this.store.dispatch(new GetAllRecipesForUser(this.getUserId()));
+    debugger
+    // this.userRecipes$ = this.userRecipesService.getAllRecipesForUser(this.userId);
     // this.userRecipes$.subscribe(value => console.log(value));
   }
 
