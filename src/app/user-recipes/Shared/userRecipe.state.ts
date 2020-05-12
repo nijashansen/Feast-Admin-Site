@@ -43,39 +43,18 @@ export class UserRecipeState {
 
   @Action(DeleteUserRecipe)
   deleteUserRecipe({getState, setState}: StateContext<UserRecipeStateModel>, action: DeleteUserRecipe) {
-   this.service.deleteUserRecipe(action.uid).pipe(tap(() => {
-      const state = getState();
-      const stateArray = state.userRecipes.filter(item => item.id !== action.uid);
-      setState({
-        ...state,
-        userRecipes: stateArray
-      });
-    }));
+   this.service.deleteUserRecipe(action.uid);
   }
 
 
   @Action(UpdateUserRecipe)
   updateUserRecipe({getState, setState}: StateContext<UserRecipeStateModel>, action: UpdateUserRecipe) {
-    this.service.updateUserRecipe(action.userRecipe).pipe(tap(result => {
-      const state = getState();
-      const list = [...state.userRecipes];
-      const index = list.findIndex(item => item.id === action.userRecipe.id);
-      list[index] = result;
-      setState({
-        ...state,
-        userRecipes: list
-      });
-    }));
+    this.service.updateUserRecipe(action.userRecipe);
   }
 
   @Action(AddUserRecipe)
   addUserRecipe({getState, setState}: StateContext<UserRecipeStateModel>, action: AddUserRecipe) {
-    this.service.addUserRecipe(action.userRecipe).pipe(tap(() => {
-      const state = getState();
-      setState(patch({
-        userRecipes: [...state.userRecipes, action.userRecipe]
-      }));
-    }));
+    this.service.addUserRecipe(action.userRecipe);
   }
 
 

@@ -53,43 +53,18 @@ export class RecipesState {
 
   @Action(DeleteRecipe)
   deleteRecipe({getState, setState}: StateContext<RecipesStateModel>, action: DeleteRecipe) {
-    return this.recipesService.deleteRecipe(action.recipe).pipe(tap(() => {
-      const state = getState();
-      const stateArray = state.recipes.filter(item => item.id !== action.recipe.id);
-      setState({
-        ...state,
-        recipes: stateArray
-      });
-    }));
+    return this.recipesService.deleteRecipe(action.recipe);
   }
 
   @Action(UpdateRecipe)
   updateRecipe({getState, setState}: StateContext<RecipesStateModel>, action: UpdateRecipe) {
-    return this.recipesService.updateRecipe(action.recipe).pipe(tap(result => {
-      const state = getState();
-      const list = [...state.recipes];
-      const index = list.findIndex(item => item.id === action.recipe.id);
-      list[index] = result;
-      setState({
-        ...state,
-        recipes: list
-      });
-    }));
+    return this.recipesService.updateRecipe(action.recipe);
   }
 
 
   @Action(CreateRecipe)
   createRecipe({getState, setState}: StateContext<RecipesStateModel>, action: CreateRecipe) {
-    return this.recipesService.addRecipe(action.recipe).pipe(
-      tap(() => {
-        const state = getState();
-        setState(
-          patch({
-            recipes: [...state.recipes, action.recipe]
-          })
-        );
-      })
-    );
+    return this.recipesService.addRecipe(action.recipe);
   }
 
 

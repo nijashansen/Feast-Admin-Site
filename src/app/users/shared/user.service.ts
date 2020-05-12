@@ -39,23 +39,12 @@ export class UserService {
     }));
   }
 
-  deleteUser(user: AuthUser): Observable<AuthUser> {
-    return from(
-      this.fs
-        .doc(`Users/${user.uid}`)
-        .delete()
-    ).pipe(
-      map(() => {
-        return user;
-      })
-    );
+  deleteUser(user: AuthUser): Promise<any> {
+    return this.fs.doc(`Users/${user.uid}`).delete();
   }
 
-  updateUser(user: AuthUser): Observable<AuthUser> {
-    return from(this.fs.doc(`Users/${user.uid}`).update(user)).pipe(map(() => {
-        return user;
-      }
-    ));
+  updateUser(user: AuthUser): Promise<any> {
+    return this.fs.doc(`Users/${user.uid}`).update(user);
   }
 
   getNextSetOfUsers(lastVisible: string) {

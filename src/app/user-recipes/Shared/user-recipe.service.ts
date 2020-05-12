@@ -40,7 +40,6 @@ export class UserRecipeService {
    */
 
   getAllRecipesForUser(userId: string): Observable<UserRecipe[]> {
-    debugger
     return this.fs.collection<UserRecipe>(ServicePart, ref => ref.where('userId', '==', userId))
       .snapshotChanges()
       .pipe(map(response => {
@@ -55,24 +54,18 @@ export class UserRecipeService {
   }
 
 
-  addUserRecipe(recipe: UserRecipe): Observable<UserRecipe> {
-    return from(this.fs.collection(ServicePart).add(recipe)).pipe(map(() => {
-      return recipe;
-    }));
+  addUserRecipe(recipe: UserRecipe): Promise<any> {
+    return this.fs.collection(ServicePart).add(recipe);
   }
 
 
-  deleteUserRecipe(urId: string): Observable<any> {
-    return from(this.fs.doc(`${ServicePart}/${urId}`).delete()).pipe(map(() => {
-      return urId;
-    }));
+  deleteUserRecipe(urId: string): Promise<any> {
+    return this.fs.doc(`${ServicePart}/${urId}`).delete();
   }
 
 
-  updateUserRecipe(recipe: UserRecipe): Observable<UserRecipe> {
-    return from(this.fs.doc(`${ServicePart}/${recipe.id}`).update(recipe)).pipe(map(() => {
-      return recipe;
-    }));
+  updateUserRecipe(recipe: UserRecipe): Promise<any> {
+    return this.fs.doc(`${ServicePart}/${recipe.id}`).update(recipe);
   }
 
 }

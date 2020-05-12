@@ -10,7 +10,7 @@ export class GetAllRecipesForUser {
 
 export class AddUserRecipe {
 
-  static readonly type = '[UserRecipe] AddUserRecipe';
+  static readonly type = '[void] AddUserRecipe';
 
   constructor(public userRecipe: UserRecipe) {
   }
@@ -19,7 +19,7 @@ export class AddUserRecipe {
 
 export class DeleteUserRecipe {
 
-  static readonly type = '[userRecipe] DeleteUserRecipe';
+  static readonly type = '[void] DeleteUserRecipe';
 
   constructor(public uid: string) {
   }
@@ -28,7 +28,7 @@ export class DeleteUserRecipe {
 
 export class UpdateUserRecipe {
 
-  static readonly type = '[userRecipe] UpdateUserRecipe';
+  static readonly type = '[void] UpdateUserRecipe';
 
   constructor(public userRecipe: UserRecipe) {
   }

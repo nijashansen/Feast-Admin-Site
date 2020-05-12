@@ -5,7 +5,7 @@ import {UserRecipeState} from './Shared/userRecipe.state';
 import {UserRecipe} from './Shared/userRecipe';
 import {Select, Store} from '@ngxs/store';
 import {GetAllRecipesForUser} from './Shared/userRecipes.action';
-import {UserRecipeService} from "./Shared/user-recipe.service";
+import {UserRecipeService} from './Shared/user-recipe.service';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class UserRecipesComponent implements OnInit {
   userRecipes$: Observable<UserRecipe[]>;
 
 
-  userId: string = this.activatedRoute.snapshot.params.uid;
+  userId = this.activatedRoute.snapshot.params.uid;
   isAddComponentActive: boolean;
 
 
@@ -29,15 +29,11 @@ export class UserRecipesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new GetAllRecipesForUser(this.getUserId()));
+   /* this.userId = this.activatedRoute.snapshot.params.uid;*/
     debugger
+    this.store.dispatch(new GetAllRecipesForUser(this.userId));
     // this.userRecipes$ = this.userRecipesService.getAllRecipesForUser(this.userId);
     // this.userRecipes$.subscribe(value => console.log(value));
-  }
-
-
-  getUserId() {
-    return this.activatedRoute.snapshot.params.uid;
   }
 
   public createNew() {

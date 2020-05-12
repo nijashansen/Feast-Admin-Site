@@ -12,6 +12,9 @@
           <mat-error *ngIf="name.hasError('required')">
             name is <strong>required</strong>
           </mat-error>
+          <mat-error *ngIf="name.hasError('minlength')">
+            name must be <strong>longer</strong> than 2 characters
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="spaced-around">
           <input formControlName="estimatedTime" matInput placeholder="Estimated Time" type="number" required>
@@ -28,12 +31,15 @@
                 <mat-error *ngIf="ingredients.at(i).get('name').hasError('required')">
                   Name is <strong>required</strong>
                 </mat-error>
+                <mat-error *ngIf="ingredients.at(i).get('name').hasError('minlength')">
+                  name must be <strong>longer</strong> than 2 characters
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field class="spaced-side">
                 <input formControlName="amount" matInput placeholder="Amount In Grams" type="number" required>
                 <label matSuffix>g</label>
-                <mat-error *ngIf="ingredients.at(i).get('amount').hasError('min')">
+                <mat-error *ngIf="ingredients.at(i).get('amount').hasError('minlength')">
                   must be <strong>more</strong> than 0
                 </mat-error>
                 <mat-error *ngIf="ingredients.at(i).get('amount').hasError('required')">
