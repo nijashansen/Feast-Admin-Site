@@ -64,8 +64,7 @@ export class RecipesState {
 
   @Action(CreateRecipe)
   createRecipe({getState, setState}: StateContext<RecipesStateModel>, action: CreateRecipe) {
-    return this.recipesService.addRecipe(action.recipe)
-      .pipe(
+    return this.recipesService.addRecipe(action.recipe).then(() =>
       tap(() => {
         const state = getState();
         setState(
