@@ -30,7 +30,7 @@ export class UserRecipesComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new GetAllRecipesForUser(this.getUserId()));
-    debugger
+
     // this.userRecipes$ = this.userRecipesService.getAllRecipesForUser(this.userId);
     // this.userRecipes$.subscribe(value => console.log(value));
   }

@@ -13,7 +13,7 @@ export class RecipesService {
   }
 
   getAllRecipes(): Observable<Recipe[]> {
-    return this.fs.collection<Recipe>('Recipes').snapshotChanges().pipe(first(), map(stuf => {
+    return this.fs.collection<Recipe>('Recipes').snapshotChanges().pipe(map(stuf => {
       const newArray: Recipe[] = [];
       stuf.forEach(doc => {
         const recipe = doc.payload.doc.data();
