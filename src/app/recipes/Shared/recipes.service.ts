@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {from, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Recipe} from './recipe';
-import {first, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -30,31 +30,18 @@ export class RecipesService {
   }
 
 
-  addRecipe(recipe: Recipe): Observable<Recipe> {
-    return from(
-      this.fs
-        .collection('Recipes')
-        .add(recipe)
-    ).pipe(
-      map(() => {
-        return recipe;
-      })
-    );
+  addRecipe(recipe: Recipe): Promise<any> {
+    return this.fs.collection('Recipes').add(recipe);
   }
 
 
-  deleteRecipe(recipe: Recipe): Observable<Recipe> {
-    return from(this.fs.doc(`Recipes/${recipe.id}`).delete()).pipe(map(() => {
-      return recipe;
-    }));
-    }
+  deleteRecipe(recipe: Recipe): Promise<any> {
+    return this.fs.doc(`Recipes/${recipe.id}`).delete();
+  }
 
 
-
-  updateRecipe(recipe: Recipe): Observable<Recipe> {
-    return from(this.fs.doc(`Recipes/${recipe.id}`).update(recipe)).pipe(map(() => {
-      return recipe;
-    }));
+  updateRecipe(recipe: Recipe): Promise<any> {
+    return this.fs.doc(`Recipes/${recipe.id}`).update(recipe);
   }
 
 

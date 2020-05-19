@@ -24,6 +24,18 @@ export class AddRecipeComponent implements OnInit {
   constructor(private store: Store, private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
   }
 
+  get ingredients() {
+    return this.form.get('ingredients') as FormArray;
+  }
+
+  get name() {
+    return this.form.get('name') as FormControl;
+  }
+
+  get estimatedTime() {
+    return this.form.get('estimatedTime') as FormControl;
+  }
+
   addIngredient() {
     const ingredient = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -39,19 +51,6 @@ export class AddRecipeComponent implements OnInit {
     this.cancel.emit();
   }
 
-  get ingredients() {
-    return this.form.get('ingredients') as FormArray;
-  }
-
-  get name() {
-    return this.form.get('name') as FormControl;
-  }
-
-  get estimatedTime() {
-    return this.form.get('estimatedTime') as FormControl;
-  }
-
-
   deleteIngredient(i) {
     this.ingredients.removeAt(i);
   }
@@ -62,8 +61,11 @@ export class AddRecipeComponent implements OnInit {
 
     if (this.form.valid) {
       const rs = this.form.value;
-      this.store.dispatch(new CreateRecipe(rs)).toPromise().then(() => this.snackBar.open
-      ('success', '', {duration: 600, panelClass: ['success']}))
+      this.store.dispatch(new CreateRecipe(rs)).toPromise().then(() => {
+        this.snackBar.open
+        ('success', '', {duration: 600, panelClass: ['success']});
+        this.onCancel();
+      })
         .catch(reason => {
           this.snackBar.open(reason, 'ok', {duration: 7000, panelClass: ['fail']});
         });

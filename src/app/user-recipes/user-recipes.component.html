@@ -1,5 +1,5 @@
 <div *ngIf="isAddComponentActive" style="padding-bottom: 5px">
-  <app-add-user-recipe (cancel)="onCancel()" [ownerID]="getUserId()"
+  <app-add-user-recipe (cancel)="onCancel()" [ownerID]="userId"
                        style="padding-bottom: 5px"></app-add-user-recipe>
 </div>
 <mat-card *ngIf="(userRecipes$|async).length === 0">
